@@ -1,0 +1,236 @@
+<template>
+  <div>
+    <sidebar></sidebar>
+    <navbar></navbar>
+    <div class="d-table m-auto pt-3">
+        <the-header :num-black="numBlack" :num-white="numWhite"></the-header>
+        <table ref="gameTable" class="game-table" :style="{ backgroundImage: 'url(\'' + background + '\')' }">
+            <th v-for="i in size + 1" class="column-header text-center" :key="'columnHeader' + i">{{ columnHeader(i) }}</th>
+            <tr v-for="(n, i) in size" :key="'row' + n">
+                <th class ="row-header text-center">{{ n }}</th>
+                <td v-for="(m, j) in size" :key="'cells' + j" class="cell text-center border border-dark" :id="i + '' + j" @click="setCell">
+                </td>
+            </tr>
+        </table>
+        <div id="difficulty-div">{{ difficulty }}</div>
+    </div>
+  </div>
+</template>
+
+<script>
+import Sidebar from "@/components/Sidebar";
+import Navbar from "@/components/Navbar";
+import TheHeader from "@/components/Header";
+import { mapGetters } from 'vuex'
+
+export default {
+  name: "Game",
+  components: { Sidebar, Navbar, TheHeader },
+  data() {
+    return {
+      background: "'/src/assets/back.jpg'",
+      image1: "'../assets/1.png'",
+      image2: "../assets/2.png"
+    };
+  },
+  computed: {
+    ...mapGetters({
+      difficulty: 'getDifficulty',
+      numBlack: 'getNumBlack',
+      numWhite: 'getNumWhite',
+      board: 'getBoard'
+    }),
+
+    size(){
+      return 8;
+      //return Math.sqrt(board.size);
+    } 
+  
+  },
+  watch: {
+    board(newVal, oldVal){
+      let cellElements = this.$refs.gameTable.getElementsByClassName("cell");
+        for (const item of cellElements) {
+            const elem = item;
+            const oldChild = elem.children.length === 0? undefined : elem.children[0];
+            const cellValue = newVal[item.id.charAt(0)][item.id.charAt(1)];
+            if (cellValue === 0 && oldChild)
+                oldChild.remove();
+            const tag = cellValue > 0 ? "img" : "span";
+            const child = document.createElement(tag);
+            child.setAttribute('style', "pointer-events: none")
+            if (cellValue > 0) {
+                const imageAttribute = cellValue === 1 ? this.image1 : this.image2
+                child.setAttribute("src", imageAttribute);
+                child.setAttribute("class", "flip-tile");
+                child.setAttribute("alt", cellValue === 1 ? "●" : "○");
+                child.setAttribute("draggable", "false");
+                if (!oldChild)
+                  elem.append(child);
+                if (oldChild && oldChild.getAttribute('src') !== child.getAttribute('src'))
+                {
+                  elem.querySelectorAll('*').forEach(n => n.remove());
+                  elem.append(child)
+                }
+            }
+            if (cellValue < 0) {
+                child.setAttribute("class", "dot d-inline-block rounded-circle mt-1 jelly-dot");
+                elem.append(child);
+            }
+        }
+    }
+  },
+  methods: {
+    setCell(evt) {
+      this.$store.dispatch('setCell', evt.target.id)
+    },
+    columnHeader: (header) => {
+      if (header > 1) {
+        return String.fromCharCode(header + 63);
+      }
+    },
+  },
+};
+</script>
+
+<style scoped>
+.game-table {
+  border: 5px solid saddlebrown;
+  box-shadow: 0 10px 16px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.29);
+}
+
+.game-table .column-header {
+  height: 28px;
+  background: #aaaaaa;
+}
+
+.game-table .row-header {
+  background: #aaaaaa;
+  width: 28px;
+}
+
+.game-table .cell {
+  width: 48px;
+  height: 48px;
+}
+
+.game-table .cell:hover {
+  background-color: rgba(160, 160, 160, 0.3);
+  transition: all 0.2s ease-in;
+}
+
+.game-table .cell .dot {
+  height: 25px;
+  width: 25px;
+  background-color: rgba(12, 12, 12, 0.5);
+  box-shadow: 0 1px 2px rgba(97, 120, 97, 0.7),
+    1px -1px 3px 1px rgba(31, 31, 31, 0.51) inset;
+}
+
+@media (max-width: 800px) {
+  .game-table .column-header {
+    font-size: 12px;
+    height: 22px;
+  }
+
+  .game-table .row-header {
+    font-size: 12px;
+    width: 22px;
+  }
+
+  .game-table .cell {
+    width: 36px;
+    height: 36px;
+  }
+
+  .game-table .cell img {
+    width: 32px;
+    height: 32px;
+  }
+
+  .game-table .cell .dot {
+    height: 20px;
+    width: 20px;
+  }
+
+  .rules > .content img {
+    width: 75%;
+  }
+}
+
+@keyframes flip {
+  0% {
+    transform: rotateY(0deg);
+    -webkit-transform: translate3D(0px, 0px, -20px) rotateY(0deg);
+  }
+  100% {
+    transform: rotateY(180deg);
+    -webkit-transform: translate3D(0px, 0px, -20px) rotateY(180deg);
+  }
+}
+
+@keyframes jelly {
+  0% {
+    transform: scale(1);
+  }
+  53% {
+    transform: scale(1.15);
+  }
+  62% {
+    transform: scale(0.87);
+  }
+  75% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@-webkit-keyframes jump {
+  0% {
+    transform: translateY(0);
+  }
+  17% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-75%);
+  }
+  50% {
+    transform: translateY(2px) scaleY(0.95);
+  }
+  60% {
+    transform: translateY(-25%);
+  }
+  70% {
+    transform: translateY(0) scaleY(0.98);
+  }
+  100% {
+    transform: translateY(0) scaleY(1);
+  }
+}
+
+.jump-class {
+  animation: jump 1.2s infinite;
+  animation-delay: 0.2s;
+}
+
+.flip-tile {
+  animation: flip 0.5s forwards;
+}
+
+.jelly-dot {
+  animation: jelly ease 0.5s;
+}
+
+.float {
+  width: 4rem;
+  height: 4rem;
+  bottom: 2rem;
+  right: 2rem;
+  background-color: rgba(80, 90, 100, 0.7);
+  color: #fff;
+  box-shadow: 2px 2px 5px #3c3c3c;
+}
+</style>
