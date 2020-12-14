@@ -1,16 +1,15 @@
 <template>
   <div>
     <sidebar></sidebar>
-    <navbar></navbar>
     <div class="d-table m-auto pt-3">
         <the-header :num-black="numBlack" :num-white="numWhite"></the-header>
         <table ref="gameTable" class="game-table" :style="{ backgroundImage: 'url(\'' + background + '\')' }">
             <th v-for="i in size + 1" class="column-header text-center" :key="'columnHeader' + i">{{ columnHeader(i) }}</th>
             <tr v-for="(n, i) in size" :key="'row' + n">
                 <th class ="row-header text-center">{{ n }}</th>
-                <td v-set="value=board[i][j]" v-for="(m, j) in size" class="cell text-center border border-dark" :id="i + '' + j" @click="setCell">
-                  <img v-if='value > 0' :key="value" class="flip-tile" :src="value === 1 ? image1 : image2" alt="">
-                  <span v-else-if='value < 0' class="dot d-inline-block rounded-circle mt-1 jelly-dot"/>
+                <td v-for="(m, j) in size" class="cell text-center border border-dark" :id="i + '' + j" @click="setCell">
+                  <img v-if='board[i][j] > 0' :key="board[i][j]" class="flip-tile" :src="board[i][j] === 1 ? image1 : image2" alt="">
+                  <span v-else-if='board[i][j] < 0' class="dot d-inline-block rounded-circle mt-1 jelly-dot"/>
                 </td>
             </tr>
         </table>
@@ -21,18 +20,18 @@
 
 <script>
 import Sidebar from "@/components/Sidebar";
-import Navbar from "@/components/Navbar";
 import TheHeader from "@/components/Header";
 import { mapGetters } from 'vuex'
+import $ from 'jquery'
 
 export default {
   name: "Game",
-  components: { Sidebar, Navbar, TheHeader },
+  components: { Sidebar, TheHeader },
   data() {
     return {
-      background: "'/src/assets/back.jpg'",
-      image1: "'../assets/1.png'",
-      image2: "../assets/2.png"
+      background: require('../assets/back.jpg'),
+      image1: require('../assets/1.png'),
+      image2: require('../assets/2.png')
     };
   },
   computed: {
@@ -57,6 +56,18 @@ export default {
       }
     },
   },
+  mounted() {
+    function checkWidth() {
+      if (window.innerWidth < 768) {
+        $('.sidenav').removeClass('show')
+      } else {
+        $('.sidenav').addClass('show')
+
+      }
+    }
+    checkWidth();
+    window.onresize = checkWidth;
+  }
 };
 </script>
 
@@ -178,11 +189,6 @@ export default {
   }
 }
 
-.jump-class {
-  animation: jump 1.2s infinite;
-  animation-delay: 0.2s;
-}
-
 .flip-tile {
   animation: flip 0.5s forwards;
 }
@@ -191,13 +197,4 @@ export default {
   animation: jelly ease 0.5s;
 }
 
-.float {
-  width: 4rem;
-  height: 4rem;
-  bottom: 2rem;
-  right: 2rem;
-  background-color: rgba(80, 90, 100, 0.7);
-  color: #fff;
-  box-shadow: 2px 2px 5px #3c3c3c;
-}
 </style>
