@@ -3,14 +3,14 @@
     <sidebar></sidebar>
     <navbar></navbar>
     <div class="d-table m-auto pt-3">
-        <the-header :num-black="numBlack" :num-white="numWhite"></the-header>
-        <table ref="gameTable" class="game-table" :style="{ backgroundImage: 'url(\'' + background + '\')' }">
+        <the-header :source1="image1" :source2="image2" :num-black="numBlack" :num-white="numWhite"></the-header>
+        <table ref="gameTable" class="game-table" :style="{ backgroundImage: 'url(' + background + ')' }">
             <th v-for="i in size + 1" class="column-header text-center" :key="'columnHeader' + i">{{ columnHeader(i) }}</th>
             <tr v-for="(n, i) in size" :key="'row' + n">
                 <th class ="row-header text-center">{{ n }}</th>
-                <td v-set="value=board[i][j]" v-for="(m, j) in size" class="cell text-center border border-dark" :id="i + '' + j" @click="setCell">
-                  <img v-if='value > 0' :key="value" class="flip-tile" :src="value === 1 ? image1 : image2" alt="">
-                  <span v-else-if='value < 0' class="dot d-inline-block rounded-circle mt-1 jelly-dot"/>
+                <td v-for="(m, j) in size" :key="'cells' + j" class="cell text-center border border-dark" :id="i + '' + j" @click="setCell">
+                  <img v-if='board[i][j] > 0' class="flip-tile" :src="board[i][j] === 1 ? image1 : image2" alt="">
+                  <span v-else-if='board[i][j] < 0' class="dot d-inline-block rounded-circle mt-1 jelly-dot"/>
                 </td>
             </tr>
         </table>
@@ -30,9 +30,9 @@ export default {
   components: { Sidebar, Navbar, TheHeader },
   data() {
     return {
-      background: "'/src/assets/back.jpg'",
-      image1: "'../assets/1.png'",
-      image2: "../assets/2.png"
+      background: require('../assets/back.jpg'),
+      image1: require('../assets/1.png'),
+      image2: require('../assets/2.png')
     };
   },
   computed: {
@@ -44,13 +44,10 @@ export default {
       size: 'getSize'
     }),
 
-    size(){
-      return 8;
-    }
   },
   methods: {
     setCell(evt) {
-      this.$store.dispatch('setCell', evt.target.id)
+      this.$store.dispatch('setCell', evt.currentTarget.id)
     },
     columnHeader: (header) => {
       if (header > 1) {

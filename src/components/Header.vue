@@ -1,11 +1,11 @@
 <template>
   <div class="row m-2">
     <div class="col text-center h-100">
-      <img src="../assets/1.png" alt="●" draggable="false" />
+      <img :src="source1" alt="●" draggable="false" />
       <span class="h4 align-middle">{{ count1 }}</span>
     </div>
     <div class="col text-center h-100">
-      <img src="../assets/2.png" alt="○" draggable="false" />
+      <img :src="source2" alt="○" draggable="false" />
       <span class="h4 align-middle">{{ count2 }}</span>
     </div>
   </div>
@@ -20,7 +20,7 @@ export default {
       count2: 2
     };
   },
-  props: ['numBlack', 'numWhite'],
+  props: ['numBlack', 'numWhite', 'source1', 'source2'],
   methods: {},
   watch: {
     numBlack(newVal, oldVal){
