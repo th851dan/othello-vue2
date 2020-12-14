@@ -13,5 +13,8 @@ export default {
     },
     getSize(state){
         return state.size
+    },
+    getSidebarVisibility(state){
+        return state.sidebarShow
     }
 }

@@ -23,6 +23,12 @@ export default {
   },
   setSize(state, size){
     state.size = size;
+  },
+  request(state, command){
+    state.socket.send(command);
+  },
+  changeSidebarVisibility(state, isVisible){
+    state.sidebarShow = isVisible;
   }
 
 }

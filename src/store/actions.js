@@ -49,5 +49,17 @@ export default {
   },
   setCell({dispatch, commit}, cellId){
     commit('setCell', cellId)
+  },
+
+  request({commit}, req){
+    commit('request', req)
+  },
+
+  changeDifficulty({commit}, dif) {
+    commit('request', 'difficulty/' + dif)
+  },
+
+  changeSidebarVisibility({commit}, isVisible){
+    commit('changeSidebarVisibility', isVisible)
   }
 }

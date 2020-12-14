@@ -5,37 +5,37 @@
                 <button type="button" role="button" class="text-left btn btn-light w-100" data-toggle="modal" data-target="#new-game-modal">New Game</button>
             </li>
             <li class="nav-item">
-                <button type="button" role="button" class="text-left btn btn-light w-100">Undo</button>
+                <button type="button" role="button" class="text-left btn btn-light w-100" @click="request('undo')">Undo</button>
             </li>
             <li class="nav-item">
-                <button type="button" role="button" class="text-left btn btn-light w-100">Redo</button>
+                <button type="button" role="button" class="text-left btn btn-light w-100" @click="request('redo')">Redo</button>
             </li>
             <li class="nav-item">
-                <button type="button" role="button" class="text-left btn btn-light w-100">Hint</button>
+                <button type="button" role="button" class="text-left btn btn-light w-100" @click="request('hint')">Hint</button>
             </li>
             <li class="nav-item">
-                <button type="button" role="button" class="text-left btn btn-light dropdown-toggle w-100" data-toggle="collapse" data-target="#difficulty">
+                <button type="button" role="button" class="text-left btn btn-light dropdown-toggle w-100" @click="toggleShow" data-toggle="collapse" data-target="difficulty">
                     Difficulty
                 </button>
-                <div class="collapse collapsible-panel" id="difficulty">
+                <div class="collapse collapsible-panel" :class="isDifVisible ? 'show' : ''" id="difficulty">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <button id="Easy" type="button" role="button" class="text-left btn w-100">Easy</button>
+                            <button id="Easy" type="button" role="button" class="text-left btn w-100" @click="changeDifficulty('e')">Easy</button>
                         </li>
                         <li class="nav-item">
-                            <button id="Normal" type="button" role="button" class="text-left btn w-100">Normal</button>
+                            <button id="Normal" type="button" role="button" class="text-left btn w-100" @click="changeDifficulty('m')">Normal</button>
                         </li>
                         <li class="nav-item">
-                            <button id="Hard" type="button" role="button" class="text-left btn w-100">Hard</button>
+                            <button id="Hard" type="button" role="button" class="text-left btn w-100" @click="changeDifficulty('d')">Hard</button>
                         </li>
                     </ul>
                 </div>
             </li>
             <li class="nav-item">
-                <button type="button" role="button" class="text-left btn btn-light dropdown-toggle w-100" data-toggle="collapse" data-target="#player-mode">
+                <button type="button" role="button" class="text-left btn btn-light dropdown-toggle w-100" @click="toggleShow" data-toggle="collapse" data-target="player-mode">
                     Mode
                 </button>
-                <div class="collapse collapsible-panel" id="player-mode">
+                <div class="collapse collapsible-panel" :class="isModeVisible ? 'show' : ''" id="player-mode">
                     <ul class="navbar-nav">
                         <li class="nav-item">
                             <button type="button" role="button" class="text-left btn toggled w-100">Player vs Player</button>
@@ -51,8 +51,24 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 export default {
-    name: "Sidebar"
+    name: "Sidebar",
+    data() {
+        return{
+            isDifVisible: false,
+            isModeVisible: false,
+        }
+    },
+    methods: {
+        ...mapActions([
+            'request',
+            'changeDifficulty'
+        ]),
+        toggleShow(e){
+            e.currentTarget.dataset.target === "difficulty" ? this.isDifVisible = !this.isDifVisible : this.isModeVisible = !this.isModeVisible;
+        }
+    },
 }
 </script>
 

@@ -1,6 +1,6 @@
 <template>
     <nav class="navbar navbar-expand-md p-2 p-md-0 navbar-dark bg-dark align-items-stretch">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidebar">
+    <button class="navbar-toggler" type="button" @click="toggleSidebar">
         <span class="navbar-toggler-icon"></span>
     </button>
     <router-link class="navbar-brand d-none d-md-block pl-3" to="/othello"><i class="fas fa-dot-circle" aria-hidden="true"></i>thello</router-link>
@@ -16,8 +16,19 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
-    name: "Navbar"
+    name: "Navbar",
+    computed: {
+        ...mapGetters({
+            isSidebarVisible: 'getSidebarVisibility'
+        })
+    },
+    methods: {
+        toggleSidebar(){
+            this.$store.dispatch('changeSidebarVisibility', !this.isSidebarVisible)
+        }
+    }
 }
 </script>
 

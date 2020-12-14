@@ -4,5 +4,6 @@ export default {
   numBlack: 0,
   numWhite: 0,
   difficulty: 'Normal',
-  size: 0
+  size: 0,
+  sidebarShow: false
 }

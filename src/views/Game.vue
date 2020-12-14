@@ -1,20 +1,52 @@
 <template>
   <div>
-    <sidebar></sidebar>
+    <sidebar :class="sizebarVisible ? 'show' : ''"></sidebar>
     <navbar></navbar>
-    <div class="d-table m-auto pt-3">
-        <the-header :source1="image1" :source2="image2" :num-black="numBlack" :num-white="numWhite"></the-header>
-        <table ref="gameTable" class="game-table" :style="{ backgroundImage: 'url(' + background + ')' }">
-            <th v-for="i in size + 1" class="column-header text-center" :key="'columnHeader' + i">{{ columnHeader(i) }}</th>
-            <tr v-for="(n, i) in size" :key="'row' + n">
-                <th class ="row-header text-center">{{ n }}</th>
-                <td v-for="(m, j) in size" :key="'cells' + j" class="cell text-center border border-dark" :id="i + '' + j" @click="setCell">
-                  <img v-if='board[i][j] > 0' class="flip-tile" :src="board[i][j] === 1 ? image1 : image2" alt="">
-                  <span v-else-if='board[i][j] < 0' class="dot d-inline-block rounded-circle mt-1 jelly-dot"/>
-                </td>
-            </tr>
-        </table>
-        <div id="difficulty-div">{{ difficulty }}</div>
+    <div v-if="board" class="d-table m-auto pt-3">
+      <the-header
+        :source1="image1"
+        :source2="image2"
+        :num-black="numBlack"
+        :num-white="numWhite"
+      ></the-header>
+      <table
+        ref="gameTable"
+        class="game-table"
+        :style="{ backgroundImage: 'url(' + background + ')' }"
+      >
+        <th
+          v-for="i in size + 1"
+          class="column-header text-center"
+          :key="'columnHeader' + i"
+        >
+          {{ columnHeader(i) }}
+        </th>
+        <tr v-for="(n, i) in size" :key="'row' + n">
+          <th class="row-header text-center">{{ n }}</th>
+          <td
+            v-for="(m, j) in size"
+            :key="'cells' + j"
+            class="cell text-center border border-dark"
+            :id="i + '' + j"
+            @click="setCell"
+          >
+            <img
+              v-if="board[i][j] > 0"
+              class="flip-tile"
+              :src="board[i][j] === 1 ? image1 : image2"
+              alt=""
+            />
+            <span
+              v-else-if="board[i][j] < 0"
+              class="dot d-inline-block rounded-circle mt-1 jelly-dot"
+            />
+          </td>
+        </tr>
+      </table>
+      <div id="difficulty-div">{{ difficulty }}</div>
+    </div>
+    <div v-else>
+      <h1 class="mt-5">No server available</h1>
     </div>
   </div>
 </template>
@@ -23,37 +55,49 @@
 import Sidebar from "@/components/Sidebar";
 import Navbar from "@/components/Navbar";
 import TheHeader from "@/components/Header";
-import { mapGetters } from 'vuex'
+import { mapGetters } from "vuex";
 
 export default {
   name: "Game",
   components: { Sidebar, Navbar, TheHeader },
   data() {
     return {
-      background: require('../assets/back.jpg'),
-      image1: require('../assets/1.png'),
-      image2: require('../assets/2.png')
+      background: require("../assets/back.jpg"),
+      image1: require("../assets/1.png"),
+      image2: require("../assets/2.png"),
     };
   },
   computed: {
     ...mapGetters({
-      difficulty: 'getDifficulty',
-      numBlack: 'getNumBlack',
-      numWhite: 'getNumWhite',
-      board: 'getBoard',
-      size: 'getSize'
+      difficulty: "getDifficulty",
+      numBlack: "getNumBlack",
+      numWhite: "getNumWhite",
+      board: "getBoard",
+      size: "getSize",
+      sizebarVisible: "getSidebarVisibility"
     }),
-
   },
   methods: {
     setCell(evt) {
-      this.$store.dispatch('setCell', evt.currentTarget.id)
+      this.$store.dispatch("setCell", evt.currentTarget.id);
     },
     columnHeader: (header) => {
       if (header > 1) {
         return String.fromCharCode(header + 63);
       }
     },
+  },
+  mounted() {
+    const store = this.$store;
+    store.dispatch("connectWebsocket");
+    function checkWidth() {
+      if (window.innerWidth < 768) 
+        store.dispatch("changeSidebarVisibility", false)
+      else 
+        store.dispatch("changeSidebarVisibility", true)
+    }
+    checkWidth();
+    window.onresize = checkWidth;
   },
 };
 </script>
