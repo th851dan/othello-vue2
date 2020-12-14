@@ -8,7 +8,9 @@
             <th v-for="i in size + 1" class="column-header text-center" :key="'columnHeader' + i">{{ columnHeader(i) }}</th>
             <tr v-for="(n, i) in size" :key="'row' + n">
                 <th class ="row-header text-center">{{ n }}</th>
-                <td v-for="(m, j) in size" :key="'cells' + j" class="cell text-center border border-dark" :id="i + '' + j" @click="setCell">
+                <td v-set="value=board[i][j]" v-for="(m, j) in size" class="cell text-center border border-dark" :id="i + '' + j" @click="setCell">
+                  <img v-if='value > 0' :key="value" class="flip-tile" :src="value === 1 ? image1 : image2" alt="">
+                  <span v-else-if='value < 0' class="dot d-inline-block rounded-circle mt-1 jelly-dot"/>
                 </td>
             </tr>
         </table>
@@ -43,41 +45,6 @@ export default {
 
     size(){
       return 8;
-      //return Math.sqrt(board.size);
-    } 
-  
-  },
-  watch: {
-    board(newVal, oldVal){
-      let cellElements = this.$refs.gameTable.getElementsByClassName("cell");
-        for (const item of cellElements) {
-            const elem = item;
-            const oldChild = elem.children.length === 0? undefined : elem.children[0];
-            const cellValue = newVal[item.id.charAt(0)][item.id.charAt(1)];
-            if (cellValue === 0 && oldChild)
-                oldChild.remove();
-            const tag = cellValue > 0 ? "img" : "span";
-            const child = document.createElement(tag);
-            child.setAttribute('style', "pointer-events: none")
-            if (cellValue > 0) {
-                const imageAttribute = cellValue === 1 ? this.image1 : this.image2
-                child.setAttribute("src", imageAttribute);
-                child.setAttribute("class", "flip-tile");
-                child.setAttribute("alt", cellValue === 1 ? "●" : "○");
-                child.setAttribute("draggable", "false");
-                if (!oldChild)
-                  elem.append(child);
-                if (oldChild && oldChild.getAttribute('src') !== child.getAttribute('src'))
-                {
-                  elem.querySelectorAll('*').forEach(n => n.remove());
-                  elem.append(child)
-                }
-            }
-            if (cellValue < 0) {
-                child.setAttribute("class", "dot d-inline-block rounded-circle mt-1 jelly-dot");
-                elem.append(child);
-            }
-        }
     }
   },
   methods: {
