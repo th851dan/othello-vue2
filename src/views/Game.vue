@@ -16,7 +16,6 @@
         <th
           v-for="i in size + 1"
           class="column-header text-center"
-          :key="'columnHeader' + i"
         >
           {{ columnHeader(i) }}
         </th>
@@ -24,7 +23,6 @@
           <th class="row-header text-center">{{ n }}</th>
           <td
             v-for="(m, j) in size"
-            :key="'cells' + j"
             class="cell text-center border border-dark"
             :id="i + '' + j"
             @click="setCell"
@@ -32,6 +30,7 @@
             <img
               v-if="board[i][j] > 0"
               class="flip-tile"
+              :key="board[i][j]"
               :src="board[i][j] === 1 ? image1 : image2"
               alt=""
             />
