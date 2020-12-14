@@ -53,13 +53,12 @@
 
 <script>
 import Sidebar from "@/components/Sidebar";
-import Navbar from "@/components/Navbar";
 import TheHeader from "@/components/Header";
 import { mapGetters } from "vuex";
 
 export default {
   name: "Game",
-  components: { Sidebar, Navbar, TheHeader },
+  components: { Sidebar, TheHeader },
   data() {
     return {
       background: require("../assets/back.jpg"),
@@ -218,11 +217,6 @@ export default {
   100% {
     transform: translateY(0) scaleY(1);
   }
-}
-
-.jump-class {
-  animation: jump 1.2s infinite;
-  animation-delay: 0.2s;
 }
 
 .flip-tile {
