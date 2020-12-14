@@ -3,5 +3,6 @@ export default {
   board: null,
   numBlack: 0,
   numWhite: 0,
-  difficulty: 'Normal'
+  difficulty: 'Normal',
+  size: 0
 }

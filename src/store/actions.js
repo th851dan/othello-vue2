@@ -20,15 +20,17 @@ export default {
       const { event, object } = JSON.parse(message.data);
       switch (event) {
         case "board-changed":
-          let cellArray = new Array(object.size)
+          const {size, squares} = object;
+          let cellArray = new Array(size)
           for (let i = 0; i < object.size; i++) {
             cellArray[i] = []
           }
-          for (let o of object.squares) {
+          for (let o of squares) {
             cellArray[o.col][o.row] = o.value
           }
           this.cells = cellArray;
           commit('setCells', cellArray);
+          commit('setSize', size);
           let bl = [].concat.apply([], cellArray).filter(e => e === 1).length;
           commit('updateBlack', bl)
           let wh = [].concat.apply([], cellArray).filter(e => e === 2).length;

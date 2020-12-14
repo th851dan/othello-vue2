@@ -38,13 +38,9 @@ export default {
       difficulty: 'getDifficulty',
       numBlack: 'getNumBlack',
       numWhite: 'getNumWhite',
-      board: 'getBoard'
+      board: 'getBoard',
+      size: 'getSize'
     }),
-
-    size(){
-      return 8;
-      //return Math.sqrt(board.size);
-    } 
   
   },
   watch: {

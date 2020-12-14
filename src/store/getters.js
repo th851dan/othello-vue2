@@ -11,4 +11,7 @@ export default {
     getNumWhite(state) {
         return state.numWhite
     },
+    getSize(state){
+        return state.size
+    }
 }

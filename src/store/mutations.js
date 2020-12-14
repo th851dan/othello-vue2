@@ -20,6 +20,9 @@ export default {
     const x = String.fromCharCode(col + 65);
     const y = 1 + row;
     state.socket.send("set/" + x + y)
+  },
+  setSize(state, size){
+    state.size = size;
   }
 
 }
