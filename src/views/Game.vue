@@ -1,7 +1,6 @@
 <template>
   <div>
     <sidebar :class="sizebarVisible ? 'show' : ''"></sidebar>
-    <navbar></navbar>
     <div v-if="board" class="d-table m-auto pt-3">
       <the-header
         :source1="image1"
