@@ -2,7 +2,7 @@
     <nav class="sidenav collapse side-collapse bg-light position-fixed" id="sidebar">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <button type="button" role="button" class="text-left btn btn-light w-100" data-toggle="modal" data-target="#new-game-modal">New Game</button>
+                <button type="button" role="button" class="text-left btn btn-light w-100" @click="showNewGameModal()">New Game</button>
             </li>
             <li class="nav-item">
                 <button type="button" role="button" class="text-left btn btn-light w-100" @click="request('undo')">Undo</button>
@@ -63,7 +63,8 @@ export default {
     methods: {
         ...mapActions([
             'request',
-            'changeDifficulty'
+            'changeDifficulty',
+            'showNewGameModal'
         ]),
         toggleShow(e){
             e.currentTarget.dataset.target === "difficulty" ? this.isDifVisible = !this.isDifVisible : this.isModeVisible = !this.isModeVisible;

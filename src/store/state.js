@@ -5,5 +5,8 @@ export default {
   numWhite: 0,
   difficulty: 'Normal',
   size: 0,
-  sidebarShow: false
+  sidebarShow: false,
+  newGameModalVisible: false,
+  gameOverModalVisible: false,
+  status: ''
 }

@@ -46,17 +46,21 @@
     <div v-else>
       <h1 class="mt-5">No server available</h1>
     </div>
+    <new-game-modal></new-game-modal>
+    <game-over-modal :source1="image1" :source2="image2"></game-over-modal>
   </div>
 </template>
 
 <script>
 import Sidebar from "@/components/Sidebar";
+import NewGameModal from "@/components/NewGameModal";
 import TheHeader from "@/components/Header";
 import { mapGetters } from "vuex";
+import GameOverModal from '../components/GameOverModal.vue';
 
 export default {
   name: "Game",
-  components: { Sidebar, TheHeader },
+  components: { Sidebar, TheHeader, NewGameModal, GameOverModal },
   data() {
     return {
       background: require("../assets/back.jpg"),
@@ -190,30 +194,6 @@ export default {
   }
   100% {
     transform: scale(1);
-  }
-}
-
-@-webkit-keyframes jump {
-  0% {
-    transform: translateY(0);
-  }
-  17% {
-    transform: translateY(0);
-  }
-  40% {
-    transform: translateY(-75%);
-  }
-  50% {
-    transform: translateY(2px) scaleY(0.95);
-  }
-  60% {
-    transform: translateY(-25%);
-  }
-  70% {
-    transform: translateY(0) scaleY(0.98);
-  }
-  100% {
-    transform: translateY(0) scaleY(1);
   }
 }
 

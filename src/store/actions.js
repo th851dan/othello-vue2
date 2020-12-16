@@ -20,7 +20,7 @@ export default {
       const { event, object } = JSON.parse(message.data);
       switch (event) {
         case "board-changed":
-          const {size, squares} = object;
+          const { size, squares } = object;
           let cellArray = new Array(size)
           for (let i = 0; i < object.size; i++) {
             cellArray[i] = []
@@ -39,6 +39,14 @@ export default {
         case "difficulty-changed":
           commit('updateDifficulty', object.difficulty);
           break;
+        case 'game-status-changed':
+          const { new_status } = object;
+          dispatch('setStatus', new_status)
+          if (new_status === "GAME_OVER") {
+            setTimeout(dispatch('showGameOverModal'), 500);
+          }
+          break;
+
         default:
           console.log(object);
           break;
@@ -47,19 +55,36 @@ export default {
       console.error(e)
     }
   },
-  setCell({dispatch, commit}, cellId){
+  setCell({ dispatch, commit }, cellId) {
     commit('setCell', cellId)
   },
 
-  request({commit}, req){
+  request({ commit }, req) {
     commit('request', req)
   },
 
-  changeDifficulty({commit}, dif) {
+  changeDifficulty({ commit }, dif) {
     commit('request', 'difficulty/' + dif)
   },
-
-  changeSidebarVisibility({commit}, isVisible){
+  setStatus({ commit }, status) {
+    commit('changeStatus', status)
+  },
+  changeSidebarVisibility({ commit }, isVisible) {
     commit('changeSidebarVisibility', isVisible)
-  }
+  },
+  newGame({ commit }) {
+    commit('request', 'new')
+  },
+  showNewGameModal({ commit }) {
+    commit('changeNewGameModalVisibility', true);
+  },
+  hideNewGameModal({ commit }) {
+    commit('changeNewGameModalVisibility', false);
+  },
+  showGameOverModal({ commit }) {
+    commit('changeGameOverModalVisibility', true);
+  },
+  hideGameOverModal({ commit }) {
+    commit('changeGameOverModalVisibility', false);
+  },
 }
