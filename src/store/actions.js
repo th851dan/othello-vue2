@@ -81,12 +81,6 @@ export default {
   newGame({ commit }) {
     commit('request', 'new')
   },
-  showNewGameModal({ commit }) {
-    commit('changeNewGameModalVisibility', true);
-  },
-  hideNewGameModal({ commit }) {
-    commit('changeNewGameModalVisibility', false);
-  },
   showGameOverModal({ commit }) {
     commit('changeGameOverModalVisibility', true);
   },

@@ -30,9 +30,6 @@ export default {
   changeSidebarVisibility(state, isVisible){
     state.sidebarShow = isVisible;
   },
-  changeNewGameModalVisibility(state, isVisible){
-    state.newGameModalVisible = isVisible;
-  },
   changeGameOverModalVisibility(state, isVisible){
     state.gameOverModalVisible = isVisible;
   },
@@ -45,5 +42,4 @@ export default {
   setMode(state, mode) {
     state.mode = mode;
   },
-
 }

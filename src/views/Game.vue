@@ -1,29 +1,31 @@
 <template>
-  <div class="d-table m-auto pt-3 animate__animated animate__slideInDown animate__faster">
-    <the-header
-        :source1="image1"
-        :source2="image2"
-        :num-black="numBlack"
-        :num-white="numWhite"
-    ></the-header>
-    <table ref="gameTable" class="game-table" :style="{ backgroundImage: 'url(' + background + ')' }">
-      <th v-for="i in size + 1" class="column-header text-center" >{{ columnHeader(i) }}</th>
-      <tr v-for="(n, i) in size">
-        <th class ="row-header text-center">{{ n }}</th>
-        <td v-for="(m, j) in size" class="cell text-center border border-dark" :id="i + '' + j" v-on:click="setCell">
-          <img v-if='board[i][j] > 0' :key="board[i][j]" class="flip-tile" :src="board[i][j] === 1 ? image1 : image2" alt="">
-          <span v-else-if='board[i][j] < 0' class="dot d-inline-block rounded-circle mt-1 jelly-dot"/>
-        </td>
-      </tr>
-    </table>
-    <div v-if="size > 0" class="collapse pt-2 pb-2 pl-3 pr-3" id="info-panel" :class="isInfoVisible ? 'show' : ''">
-      <div><span>Difficulty:</span><span class="float-right font-weight-bold">{{ displayedDifficulty }}</span></div>
-      <div><span>Current turn:</span><span class="float-right font-weight-bold">{{ currentPlayerName }}</span></div>
-      <div><span>Mode:</span><span class="float-right font-weight-bold">{{ gameMode }}</span></div>
+  <div>
+    <div class="d-table m-auto pt-3 animate__animated animate__slideInDown animate__faster">
+      <the-header
+          :source1="image1"
+          :source2="image2"
+          :num-black="numBlack"
+          :num-white="numWhite"
+      ></the-header>
+      <table ref="gameTable" class="game-table" :style="{ backgroundImage: 'url(' + background + ')' }">
+        <th v-for="i in size + 1" class="column-header text-center" >{{ columnHeader(i) }}</th>
+        <tr v-for="(n, i) in size">
+          <th class ="row-header text-center">{{ n }}</th>
+          <td v-for="(m, j) in size" class="cell text-center border border-dark" :id="i + '' + j" v-on:click="setCell">
+            <img v-if='board[i][j] > 0' :key="board[i][j]" class="flip-tile" :src="board[i][j] === 1 ? image1 : image2" alt="">
+            <span v-else-if='board[i][j] < 0' class="dot d-inline-block rounded-circle mt-1 jelly-dot"/>
+          </td>
+        </tr>
+      </table>
+      <b-collapse tag="div" v-if="size > 0" class="pt-2 pb-2 pl-3 pr-3" id="info-panel">
+        <div><span>Difficulty:</span><span class="float-right font-weight-bold">{{ displayedDifficulty }}</span></div>
+        <div><span>Current turn:</span><span class="float-right font-weight-bold">{{ currentPlayerName }}</span></div>
+        <div><span>Mode:</span><span class="float-right font-weight-bold">{{ gameMode }}</span></div>
+      </b-collapse>
+      <b-button v-b-toggle.info-panel class="info-btn dropdown-toggle"/>
+      <new-game-modal></new-game-modal>
+      <game-over-modal :source1="image1" :source2="image2"></game-over-modal>
     </div>
-    <button class="info-btn btn dropdown-toggle" data-toggle="collapse" @click="toggleShow" data-target="info-panel"/>
-    <new-game-modal></new-game-modal>
-    <game-over-modal :source1="image1" :source2="image2"></game-over-modal>
   </div>
 </template>
 
@@ -41,7 +43,6 @@ export default {
       background: require("../assets/back.jpg"),
       image1: require("../assets/1.png"),
       image2: require("../assets/2.png"),
-      isInfoVisible: false,
     };
   },
   computed: {
@@ -64,9 +65,6 @@ export default {
       if (header > 1) {
         return String.fromCharCode(header + 63);
       }
-    },
-    toggleShow() {
-      this.isInfoVisible = !this.isInfoVisible;
     }
   },
   mounted() {
@@ -142,7 +140,10 @@ export default {
   box-shadow: 0 10px 16px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19), 0 5px 5px -3px rgba(25,25,25,0.7) inset;
 }
 
-.info-btn {
+.info-btn,.info-btn:hover,.info-btn:focus {
+  color: black !important;
+  background: none !important;
+  border: none !important;
   margin-top: -5px;
 }
 

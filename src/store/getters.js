@@ -17,12 +17,6 @@ export default {
     getSidebarVisibility(state){
         return state.sidebarShow
     },
-    getNavigationVisibility(state){
-        return state.navigationVisibility;
-    },
-    getNewGameModalVisibility(state){
-        return state.newGameModalVisible
-    },
     getGameOverModalVisibility(state){
         return state.gameOverModalVisible
     },

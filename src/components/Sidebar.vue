@@ -2,16 +2,16 @@
   <nav class="sidenav collapse bg-light position-fixed" :class="sidebarVisible ? 'show' : ''">
     <ul class="navbar-nav">
       <li class="nav-item">
-        <button type="button" role="button" class="text-left btn btn-light w-100" @click="showNewGameModal()">New Game</button>
+        <b-button  v-b-modal.new-game-modal type="button" role="button" class="text-left btn btn-light w-100">New Game</b-button>
       </li>
       <li v-for="element in ['Undo', 'Redo', 'Hint']" class="nav-item">
         <button type="button" role="button" class="text-left btn btn-light w-100" @click="request(element.toLowerCase())">{{element}}</button>
       </li>
       <li class="nav-item">
-        <button type="button" role="button" class="text-left btn btn-light dropdown-toggle w-100" @click="toggleShow" data-toggle="collapse" data-target="difficulty">
+        <b-button v-b-toggle.difficulty type="button" role="button" class="text-left btn btn-light dropdown-toggle w-100">
           Difficulty
-        </button>
-        <div class="collapse collapsible-panel" :class="isDifVisible ? 'show' : ''" id="difficulty">
+        </b-button>
+        <b-collapse tag="div" class="collapsible-panel" id="difficulty">
           <ul class="navbar-nav">
             <li v-for="element in [{key: 'e', text: 'Easy'}, {key: 'm', text:'Normal'}, {key: 'd' ,text:'Hard'}]" class="nav-item">
               <button
@@ -21,19 +21,19 @@
               >{{element.text}}</button>
             </li>
           </ul>
-        </div>
+        </b-collapse>
       </li>
       <li class="nav-item">
-        <button type="button" role="button" class="text-left btn btn-light dropdown-toggle w-100" @click="toggleShow" data-toggle="collapse" data-target="player-mode">
+        <b-button v-b-toggle.player-mode type="button" role="button" class="text-left btn btn-light dropdown-toggle w-100">
           Mode
-        </button>
-        <div class="collapse collapsible-panel" :class="isModeVisible ? 'show' : ''" id="player-mode">
+        </b-button>
+        <b-collapse tag="div" class="collapsible-panel" id="player-mode">
           <ul class="navbar-nav">
             <li v-for="element in [{key: '2', text: 'Player vs Player'}, {key: '1', text:'Player vs Bot'}, {key: '0', text:'Bot vs Bot'}]" @click="changeGameMode(element.key)" class="nav-item">
               <button type="button" role="button" class="text-left btn w-100">{{element.text}}</button>
             </li>
           </ul>
-        </div>
+        </b-collapse>
       </li>
     </ul>
   </nav>
@@ -43,22 +43,12 @@
 import {mapActions, mapGetters} from 'vuex';
 export default {
     name: "Sidebar",
-    data() {
-        return{
-            isDifVisible: false,
-            isModeVisible: false,
-        }
-    },
     methods: {
         ...mapActions([
             'request',
             'changeDifficulty',
-            'showNewGameModal',
             'changeGameMode'
         ]),
-        toggleShow(e){
-            e.currentTarget.dataset.target === "difficulty" ? this.isDifVisible = !this.isDifVisible : this.isModeVisible = !this.isModeVisible;
-        }
     },
   computed: {
     ...mapGetters({

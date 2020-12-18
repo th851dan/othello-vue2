@@ -11,11 +11,13 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 import { fab } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { dom } from '@fortawesome/fontawesome-svg-core'
+import AnimateCSS from 'animate.css'
 //import all fas, fab icon
 library.add(fas, fab)
 //Feature of Font Awesome: auto convert <i> to <svg>
 dom.watch()
 Vue.component('font-awesome-icon', FontAwesomeIcon)
+Vue.use(AnimateCSS)
 
 Vue.config.productionTip = false
 // Install BootstrapVue
