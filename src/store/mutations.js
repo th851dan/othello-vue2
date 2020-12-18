@@ -38,6 +38,12 @@ export default {
   },
   changeStatus(state, status){
     state.status = status;
-  }
+  },
+  setPlayer(state, player) {
+    state.currentPlayer = player;
+  },
+  setMode(state, mode) {
+    state.mode = mode;
+  },
 
 }

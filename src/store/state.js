@@ -8,5 +8,7 @@ export default {
   sidebarShow: false,
   newGameModalVisible: false,
   gameOverModalVisible: false,
-  status: ''
+  status: '',
+  currentPlayer: {},
+  mode: '0'
 }

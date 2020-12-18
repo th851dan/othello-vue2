@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Game from '../views/Game.vue'
+import NotFound from '../views/NotFound.vue'
 
 Vue.use(VueRouter)
 
@@ -15,6 +16,11 @@ const routes = [
     path: '/othello',
     name: 'Othello',
     component: Game
+  },
+  {
+    path: '*',
+    name: 'NotFound',
+    component: NotFound
   },
   {
     path: '/about',

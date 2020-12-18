@@ -25,10 +25,7 @@ export default {
           for (let i = 0; i < object.size; i++) {
             cellArray[i] = []
           }
-          for (let o of squares) {
-            cellArray[o.col][o.row] = o.value
-          }
-          this.cells = cellArray;
+          squares.forEach(o => cellArray[o.col][o.row] = o.value);
           commit('setCells', cellArray);
           commit('setSize', size);
           let bl = [].concat.apply([], cellArray).filter(e => e === 1).length;
@@ -46,9 +43,15 @@ export default {
             setTimeout(dispatch('showGameOverModal'), 500);
           }
           break;
-
+        case "player-changed":
+          dispatch('setPlayer', object);
+          break;
+        case "mode-changed":
+          const {mode} = object;
+          dispatch('setMode', mode);
+          break;
         default:
-          console.log(object);
+          console.error("Unknown message");
           break;
       }
     } catch (e) {
@@ -65,6 +68,9 @@ export default {
 
   changeDifficulty({ commit }, dif) {
     commit('request', 'difficulty/' + dif)
+  },
+  changeGameMode({ commit }, mode) {
+    commit('request', 'setupplayers/' + mode)
   },
   setStatus({ commit }, status) {
     commit('changeStatus', status)
@@ -87,4 +93,10 @@ export default {
   hideGameOverModal({ commit }) {
     commit('changeGameOverModalVisibility', false);
   },
+  setPlayer({ commit }, player) {
+    commit('setPlayer', player)
+  },
+  setMode({ commit }, mode) {
+    commit('setMode', mode)
+  }
 }
