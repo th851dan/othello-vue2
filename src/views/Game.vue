@@ -1,12 +1,7 @@
 <template>
-  <div>
+  <div v-if="size > 0">
     <div class="d-table m-auto pt-3 animate__animated animate__slideInDown animate__faster">
-      <the-header
-          :source1="image1"
-          :source2="image2"
-          :num-black="numBlack"
-          :num-white="numWhite"
-      ></the-header>
+      <the-header :source1="image1" :source2="image2" :num-black="numBlack" :num-white="numWhite"/>
       <table ref="gameTable" class="game-table" :style="{ backgroundImage: 'url(' + background + ')' }">
         <th v-for="i in size + 1" class="column-header text-center" >{{ columnHeader(i) }}</th>
         <tr v-for="(n, i) in size">
@@ -26,6 +21,9 @@
       <new-game-modal></new-game-modal>
       <game-over-modal :source1="image1" :source2="image2"></game-over-modal>
     </div>
+  </div>
+  <div v-else class="d-flex justify-content-center text-center align-items-center" style="min-height: 75vh">
+    <b-spinner style="width: 5rem; height: 5rem"></b-spinner>
   </div>
 </template>
 

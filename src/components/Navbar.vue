@@ -1,8 +1,8 @@
 <template>
   <nav class="navbar navbar-expand-md p-0 navbar-dark bg-dark">
-    <button class="navbar-toggler border-0" type="button" @click="toggleSidebar">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+    <b-button v-b-toggle.sidebar class="navbar-toggler border-0" type="button">
+      <span class="navbar-toggler-icon"/>
+    </b-button>
     <router-link class="navbar-brand d-none d-md-block pl-3" to="/othello">
       <span class="fas fa-dot-circle" aria-hidden="true"></span>thello
     </router-link>
@@ -17,26 +17,17 @@
           :to="element.route"
       >{{element.text}}</router-link>
       <li class="nav-link">
-        <a href="https://github.com/th851dan/webtech-othello" target="_blank"><i class="fab fa-github" aria-hidden="true"></i></a>
+        <a href="https://github.com/th851dan/webtech-othello" target="_blank">
+          <i class="fab fa-github" aria-hidden="true"/>
+        </a>
       </li>
     </b-collapse>
   </nav>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 export default {
-    name: "Navbar",
-    computed: {
-        ...mapGetters({
-            isSidebarVisible: 'getSidebarVisibility'
-        })
-    },
-    methods: {
-        toggleSidebar(){
-            this.$store.dispatch('changeSidebarVisibility', !this.isSidebarVisible)
-        }
-    }
+    name: "Navbar"
 }
 </script>
 

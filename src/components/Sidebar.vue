@@ -1,5 +1,5 @@
 <template>
-  <nav class="sidenav collapse bg-light position-fixed" :class="sidebarVisible ? 'show' : ''">
+  <b-collapse tag="nav" class="sidenav collapse bg-light position-fixed" id="sidebar" :visible="sidebarVisible">
     <ul class="navbar-nav">
       <li class="nav-item">
         <b-button  v-b-modal.new-game-modal type="button" role="button" class="text-left btn btn-light w-100">New Game</b-button>
@@ -36,7 +36,7 @@
         </b-collapse>
       </li>
     </ul>
-  </nav>
+  </b-collapse>
 </template>
 
 <script>

@@ -40,7 +40,7 @@ export default {
           const { new_status } = object;
           dispatch('setStatus', new_status)
           if (new_status === "GAME_OVER") {
-            setTimeout(dispatch('showGameOverModal'), 500);
+            setTimeout(() => dispatch('showGameOverModal'), 500);
           }
           break;
         case "player-changed":
