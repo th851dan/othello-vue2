@@ -18,6 +18,10 @@
                   @click="changeDifficulty(element.key)"
                   type="button" role="button"
                   class="text-left btn w-100"
+                  :class="{
+                    'text-body' : difficulty === element.text,
+                    'disabled': gameMode !== '1'
+                  }"
               >{{element.text}}</button>
             </li>
           </ul>
@@ -29,8 +33,16 @@
         </b-button>
         <b-collapse tag="div" class="collapsible-panel" id="player-mode">
           <ul class="navbar-nav">
-            <li v-for="element in [{key: '2', text: 'Player vs Player'}, {key: '1', text:'Player vs Bot'}, {key: '0', text:'Bot vs Bot'}]" @click="changeGameMode(element.key)" class="nav-item">
-              <button type="button" role="button" class="text-left btn w-100">{{element.text}}</button>
+            <li
+                v-for="element in [{key: '2', text: 'Player vs Player'}, {key: '1', text:'Player vs Bot'}, {key: '0', text:'Bot vs Bot'}]"
+                @click="changeGameMode(element.key)"
+                class="nav-item">
+              <button
+                  type="button"
+                  role="button"
+                  class="text-left btn w-100"
+                  :class="{'text-body': gameMode === element.key}"
+              >{{element.text}}</button>
             </li>
           </ul>
         </b-collapse>
@@ -52,7 +64,9 @@ export default {
     },
   computed: {
     ...mapGetters({
-      sidebarVisible: "getSidebarVisibility"
+      sidebarVisible: "getSidebarVisibility",
+      difficulty: "getDisplayedDifficulty",
+      gameMode: "getMode"
     })
   }
 
@@ -81,6 +95,12 @@ export default {
 .sidenav button {
   font-size: 22px;
   color: #818181;
+  transition: all 0.3s;
+}
+
+.sidenav button:hover {
+  color: #333;
+  background: #ddd;
 }
 
 .sidenav.collapse {

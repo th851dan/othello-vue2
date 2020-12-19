@@ -14,8 +14,11 @@ export default {
     getSize(state){
         return state.size
     },
-    getSidebarVisibility(state){
+    getSidebarVisibility(state) {
         return state.sidebarShow
+    },
+    getMode(state) {
+        return state.mode;
     },
     getGameOverModalVisibility(state){
         return state.gameOverModalVisible

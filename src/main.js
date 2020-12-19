@@ -18,7 +18,7 @@ library.add(fas, fab)
 dom.watch()
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.use(AnimateCSS)
-
+Vue.config.devtools = false
 Vue.config.productionTip = false
 // Install BootstrapVue
 Vue.use(BootstrapVue)

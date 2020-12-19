@@ -9,5 +9,5 @@ export default {
   gameOverModalVisible: false,
   status: '',
   currentPlayer: {},
-  mode: '0'
+  mode: '1'
 }
