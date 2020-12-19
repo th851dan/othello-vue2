@@ -12,12 +12,17 @@
           </td>
         </tr>
       </table>
+      <div class="float-right">
+        <b-button class="plus-minus-btn" @click="request('resize/-')" :disabled="size === 4"><b-icon-dash/></b-button>
+        <b-button class="plus-minus-btn" @click="request('resize/.')" :disabled="size === 8"><b-icon-dot/></b-button>
+        <b-button class="plus-minus-btn" @click="request('resize/+')" :disabled="size === 10"><b-icon-plus/></b-button>
+      </div>
       <b-collapse tag="div" v-if="size > 0" class="pt-2 pb-2 pl-3 pr-3" id="info-panel">
         <div><span>Difficulty:</span><span class="float-right font-weight-bold">{{ displayedDifficulty }}</span></div>
         <div><span>Current turn:</span><span class="float-right font-weight-bold">{{ currentPlayerName }}</span></div>
         <div><span>Mode:</span><span class="float-right font-weight-bold">{{ gameMode }}</span></div>
       </b-collapse>
-      <b-button v-b-toggle.info-panel class="info-btn dropdown-toggle"/>
+      <b-button v-b-toggle.info-panel class="info-btn"><b-icon-chevron-compact-down/></b-button>
       <new-game-modal></new-game-modal>
       <game-over-modal :source1="image1" :source2="image2"></game-over-modal>
     </div>
@@ -30,7 +35,7 @@
 <script>
 import NewGameModal from "@/components/NewGameModal";
 import TheHeader from "@/components/Header";
-import { mapGetters } from "vuex";
+import {mapActions, mapGetters} from "vuex";
 import GameOverModal from '../components/GameOverModal.vue';
 
 export default {
@@ -63,7 +68,8 @@ export default {
       if (header > 1) {
         return String.fromCharCode(header + 63);
       }
-    }
+    },
+    ...mapActions(['request'])
   },
   mounted() {
     const store = this.$store
@@ -138,11 +144,10 @@ export default {
   box-shadow: 0 10px 16px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19), 0 5px 5px -3px rgba(25,25,25,0.7) inset;
 }
 
-.info-btn,.info-btn:hover,.info-btn:focus {
+.info-btn,.plus-minus-btn,.info-btn:hover {
   color: black !important;
   background: none !important;
   border: none !important;
-  margin-top: -5px;
 }
 
 #info-panel div {
