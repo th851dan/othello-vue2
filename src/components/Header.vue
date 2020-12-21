@@ -1,12 +1,8 @@
 <template>
   <div class="row m-2">
-    <div class="col text-center h-100">
-      <img :src="source1" alt="●" draggable="false" />
-      <span class="h4 align-middle">{{ numBlack }}</span>
-    </div>
-    <div class="col text-center h-100">
-      <img :src="source2" alt="○" draggable="false" />
-      <span class="h4 align-middle">{{ numWhite }}</span>
+    <div v-for="element in [{'key': source1, 'value': numBlack}, {'key': source2, 'value': numWhite}]" class="col text-center">
+      <img :src="element.key" alt="●" draggable="false"/>
+      <span class="h4 align-middle" style="cursor: default">{{ element.value }}</span>
     </div>
   </div>
 </template>

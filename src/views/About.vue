@@ -25,7 +25,7 @@
       <p>Players will then continue to move alternately until they get to the end of the game and a winner is decided. This decision is reached by identifying which of the two opponents has the most pieces on the board.</p>
     </div>
   </div>
-  <div id="floating-btn" class="btn btn-lg d-flex position-fixed justify-content-center align-items-center rounded-circle animate__animated animate__slideInUp animate__fast">
+  <div id="floating-btn" @click="goBack" class="btn btn-lg d-flex position-fixed justify-content-center align-items-center rounded-circle animate__animated animate__fadeInUp animate__faster animate__delay-1s">
     <i class="fas fa-reply"></i>
   </div>
   </div>
@@ -37,8 +37,10 @@ export default {
       screenshot: require('../assets/screenshot.png')
     }
   },
+  methods: {
+    goBack: () => history.back()
+  },
   mounted() {
-    document.getElementById('floating-btn').onclick= () => history.back();
     document.title = "About"
   }
 }

@@ -43,6 +43,7 @@ export default {
 }
 
 .landing-page > #game-start #play-button {
+  filter: drop-shadow( 1px 1px 2px rgba(10, 10, 10, 0.5));
   font-size: 120%;
   color: #5b9628;
 }

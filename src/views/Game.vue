@@ -2,7 +2,7 @@
   <div v-if="size > 0">
     <div class="d-table m-auto pt-3 animate__animated animate__slideInDown animate__faster">
       <the-header :source1="image1" :source2="image2" :num-black="numBlack" :num-white="numWhite"/>
-      <table ref="gameTable" class="game-table" :style="{ backgroundImage: 'url(' + background + ')' }">
+      <table class="game-table" :style="{ backgroundImage: 'url(' + background + ')' }">
         <th v-for="i in size + 1" class="column-header text-center" >{{ columnHeader(i) }}</th>
         <tr v-for="(n, i) in size">
           <th class ="row-header text-center">{{ n }}</th>
@@ -131,7 +131,6 @@ export default {
 .game-table .cell .dot {
   height: 25px;
   width: 25px;
-  pointer-events: none;
   background-color: rgba(12, 12, 12, 0.5);
   box-shadow: 0 1px 2px rgba(97, 120, 97, 0.7), 1px -1px 3px 1px rgba(31,31,31,0.51) inset;
 }
@@ -139,8 +138,8 @@ export default {
 #info-panel {
   background: lightgray;
   max-width: 230px;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 7px;
+  border-bottom-right-radius: 7px;
   box-shadow: 0 10px 16px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19), 0 5px 5px -3px rgba(25,25,25,0.7) inset;
 }
 
@@ -204,30 +203,6 @@ export default {
   }
   100% {
     transform: scale(1);
-  }
-}
-
-@-webkit-keyframes jump {
-  0% {
-    transform: translateY(0);
-  }
-  17% {
-    transform: translateY(0);
-  }
-  40% {
-    transform: translateY(-75%);
-  }
-  50% {
-    transform: translateY(2px) scaleY(0.95);
-  }
-  60% {
-    transform: translateY(-25%);
-  }
-  70% {
-    transform: translateY(0) scaleY(0.98);
-  }
-  100% {
-    transform: translateY(0) scaleY(1);
   }
 }
 

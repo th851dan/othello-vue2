@@ -74,8 +74,11 @@ export default {
 
 @media (max-width: 767px) {
   .navbar>.navbar-nav {
-    transition-duration: 0.3s;
-    transition-property: all;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .navbar-toggler, .navbar-toggler:hover {
+    background: none !important;
   }
 
   .navbar>.navbar-nav.collapse {
@@ -86,6 +89,11 @@ export default {
   .navbar>.navbar-nav.collapse.show {
     visibility: visible;
     display: inline-flex;
+  }
+
+  .navbar>.navbar-nav.collapsing {
+    display: inline-flex !important;
+    transform: translateX(100%);
   }
 }
 </style>

@@ -1,14 +1,14 @@
 <template>
-  <b-collapse tag="nav" class="sidenav collapse bg-light position-fixed" id="sidebar" :visible="sidebarVisible">
+  <b-collapse tag="nav" class="sidenav collapse position-fixed" id="sidebar" :visible="sidebarVisible">
     <ul class="navbar-nav">
       <li class="nav-item">
-        <b-button  v-b-modal.new-game-modal type="button" role="button" class="text-left btn btn-light w-100">New Game</b-button>
+        <b-button  v-b-modal.new-game-modal type="button" role="button" class="text-left btn-light w-100">New Game</b-button>
       </li>
       <li v-for="element in ['Undo', 'Redo', 'Hint']" class="nav-item">
-        <button type="button" role="button" class="text-left btn btn-light w-100" @click="request(element.toLowerCase())">{{element}}</button>
+        <b-button type="button" role="button" class="text-left btn-light w-100" @click="request(element.toLowerCase())">{{element}}</b-button>
       </li>
       <li class="nav-item">
-        <b-button v-b-toggle.difficulty type="button" role="button" class="text-left btn btn-light dropdown-toggle w-100">
+        <b-button v-b-toggle.difficulty type="button" role="button" class="text-left btn-light dropdown-toggle w-100">
           Difficulty
         </b-button>
         <b-collapse tag="div" class="collapsible-panel" id="difficulty">
@@ -28,7 +28,7 @@
         </b-collapse>
       </li>
       <li class="nav-item">
-        <b-button v-b-toggle.player-mode type="button" role="button" class="text-left btn btn-light dropdown-toggle w-100">
+        <b-button v-b-toggle.player-mode type="button" role="button" class="text-left btn-light dropdown-toggle w-100">
           Mode
         </b-button>
         <b-collapse tag="div" class="collapsible-panel" id="player-mode">
@@ -77,7 +77,8 @@ export default {
 
 .sidenav {
   z-index: 1;
-  opacity: 0.96;
+  backdrop-filter: blur(5px);
+  background-color:rgba(248, 249, 250, 0.72);
   overflow-y: auto;
   margin-top: -57px;
   padding-top: 100px;
@@ -95,12 +96,14 @@ export default {
 .sidenav button {
   font-size: 22px;
   color: #818181;
+  background: none;
+  border: none;
   transition: all 0.3s;
 }
 
 .sidenav button:hover {
   color: #333;
-  background: #ddd;
+  background: rgba(221,221,221,0.5)
 }
 
 .sidenav.collapse {
@@ -116,13 +119,13 @@ export default {
 .sidenav.collapsing {
   transition-property: margin-left, visibility;
   transition-duration: 0.2s;
-  height: 110vh;
+  min-height: 110vh;
   margin-left: -200px;
   transition-timing-function: ease-in-out;
 }
 
 .collapsible-panel {
-  background: #eeeeee;
+  background: rgba(218,218,218,0.4);
   box-shadow: inset 0 2px 2px 0 rgba(30, 30, 30, 0.1);
 }
 </style>

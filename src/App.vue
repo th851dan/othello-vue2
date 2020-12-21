@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="user-select-none">
+  <div class="user-select-none app-container">
     <navbar class="animate__animated animate__slideInDown animate__faster"/>
     <sidebar/>
     <transition :enter-active-class=transitionEnter :leave-active-class=transitionExit mode="out-in">
@@ -37,6 +37,9 @@ export default {
   }
 }
 </script>
-<style>
-
+<style scoped>
+.modal-open .app-container {
+  transition: all 0.2s;
+  filter: blur(10px);
+}
 </style>
