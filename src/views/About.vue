@@ -1,6 +1,6 @@
 <template>
   <div>
-  <div class="rules col-12 col-md-9 text-justify mt-3 mt-md-5 mb-3 mb-md-5 ml-auto mr-auto animate__animated animate__fadeInRight rounded">
+  <v-sheet color="grey lighten-1" elevation="5" rounded="lg" class="rules col-12 col-md-9 text-justify mt-3 mt-md-5 mb-3 mb-md-5 ml-auto mr-auto animate__animated animate__fadeInRight">
     <div class="content p-3 p-md-5">
       <h1 class="text-center">About Othello</h1>
 
@@ -24,10 +24,10 @@
 
       <p>Players will then continue to move alternately until they get to the end of the game and a winner is decided. This decision is reached by identifying which of the two opponents has the most pieces on the board.</p>
     </div>
-  </div>
-  <div id="floating-btn" @click="goBack" class="btn btn-lg d-flex position-fixed justify-content-center align-items-center rounded-circle animate__animated animate__fadeInUp animate__faster animate__delay-1s">
-    <i class="fas fa-reply"></i>
-  </div>
+  </v-sheet>
+  <v-btn id="floating-btn" large color="rgba(80,90,100,0.7)" elevation="2" fab @click="goBack" class="position-fixed animate__animated animate__fadeInUp animate__faster animate__delay-1s">
+    <v-icon color="white">mdi-reply</v-icon>
+  </v-btn>
   </div>
 </template>
 <script>
@@ -46,28 +46,14 @@ export default {
 }
 </script>
 <style scoped>
-.rules {
-  background-color: #aaaaaa;
-  box-shadow: 0 10px 16px 0 rgba(0, 0, 0, 0.3), 0 3px 10px 0 rgba(0, 0, 0, 0.29);
-}
 
 .rules > .content img {
   width: 500px;
 }
 
 #floating-btn {
-  transition: all 0.15s ease-in;
-  width: 4rem;
-  height: 4rem;
-  bottom: 2rem;
-  right: 2rem;
-  background-color: rgba(80,90,100,0.7);
-  color:#FFF;
-  box-shadow: 2px 2px 5px #3c3c3c;
-}
-
-#floating-btn:hover {
-  background-color: rgba(60,70,80,0.8);
+  bottom: 1rem;
+  right: 1rem;
 }
 
 @media (max-width: 800px) {

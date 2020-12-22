@@ -1,35 +1,27 @@
 <template>
-  <nav class="navbar navbar-expand-md p-0 navbar-dark bg-dark">
-    <b-button v-b-toggle.sidebar class="navbar-toggler border-0" type="button">
-      <span class="navbar-toggler-icon"/>
+  <nav class="navbar navbar-expand-md p-0 navbar-dark">
+    <b-button class="navbar-toggler" v-b-toggle.sidebar>
+      <v-icon dark>mdi-menu</v-icon>
     </b-button>
-    <router-link class="navbar-brand d-none d-md-block pl-3" to="/othello">
-      <span class="fas fa-dot-circle" aria-hidden="true"></span>thello
+    <router-link class="navbar-brand d-md-inline-flex align-items-center pl-3" to="/othello">
+      <v-icon dark aria-hidden="true">mdi-record-circle-outline</v-icon>thello
     </router-link>
-    <b-button v-b-toggle.navigation class="navbar-toggler border-0 ml-auto">
-      <span class="fa fa-caret-left"></span>
+    <b-button v-b-toggle.navigation class="navbar-toggler ml-auto">
+      <v-icon dark>mdi-chevron-left</v-icon>
     </b-button>
-    <b-collapse tag="ul" id="navigation" class="navbar-nav collapse d-md-inline-flex flex-row ml-md-auto">
+    <b-collapse tag="ul" id="navigation" class="navbar-nav collapse d-md-flex flex-row ml-md-auto">
       <router-link
           v-for="element in [{route: '/', text: 'Home'}, {route: '/othello', text: 'Game'}, {route: '/about', text: 'About'}]"
           class="nav-link pl-2 pr-2"
           :key="element.route"
           :to="element.route"
       >{{element.text}}</router-link>
-      <li class="nav-link">
-        <a href="https://github.com/th851dan/webtech-othello" target="_blank">
-          <i class="fab fa-github" aria-hidden="true"/>
-        </a>
-      </li>
+      <a class="nav-link" href="https://github.com/th851dan/webtech-othello" target="_blank">
+        <v-icon dark>mdi-github</v-icon>
+      </a>
     </b-collapse>
   </nav>
 </template>
-
-<script>
-export default {
-    name: "Navbar"
-}
-</script>
 
 <style scoped>
 .navbar {
@@ -43,24 +35,16 @@ export default {
   background: rgb(117,198,200);
   background: linear-gradient(180deg, rgba(117,198,200,1) 0%, rgba(86,148,150,1) 100%);
   width: 200px;
-  border:1px solid rgb(96,158,160);
 }
 
 .navbar > .navbar-nav.collapse {
   visibility: visible;
 }
 
-.navbar > .navbar-nav a, .navbar .navbar-toggler {
+.navbar > .navbar-nav a, .navbar .btn {
   transition: all 0.2s ease-in;
-  color: #cccccc;
-  text-decoration: none;
-  font-size: 18px;
-  padding-left: 8px;
-  padding-right: 8px;
-}
-
-.navbar .navbar-nav a:hover, .navbar .navbar-toggler:hover {
-  color: #eafffa;
+  border: none;
+  padding: 6px;
 }
 
 .navbar > .navbar-nav a:active {
@@ -73,8 +57,9 @@ export default {
 }
 
 @media (max-width: 767px) {
-  .navbar>.navbar-nav {
-    transition: all 0.3s ease-in-out;
+
+  .navbar .navbar-brand {
+    display: none;
   }
 
   .navbar-toggler, .navbar-toggler:hover {
@@ -82,12 +67,12 @@ export default {
   }
 
   .navbar>.navbar-nav.collapse {
-    visibility: hidden;
+    padding: 0;
+    transition: all 0.3s ease-in-out;
     display: none;
   }
 
   .navbar>.navbar-nav.collapse.show {
-    visibility: visible;
     display: inline-flex;
   }
 

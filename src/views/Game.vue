@@ -1,34 +1,42 @@
 <template>
   <div v-if="size > 0">
-    <div class="d-table m-auto pt-3 animate__animated animate__slideInDown animate__faster">
+    <div class="d-table m-auto animate__animated animate__slideInDown animate__faster">
       <the-header :source1="image1" :source2="image2" :num-black="numBlack" :num-white="numWhite"/>
       <table class="game-table" :style="{ backgroundImage: 'url(' + background + ')' }">
         <th v-for="i in size + 1" class="column-header text-center" >{{ columnHeader(i) }}</th>
         <tr v-for="(n, i) in size">
           <th class ="row-header text-center">{{ n }}</th>
-          <td v-for="(m, j) in size" class="cell text-center border border-dark" :id="i + '' + j" v-on:click="setCell">
-            <img v-if='board[i][j] > 0' :key="board[i][j]" class="flip-tile" :src="board[i][j] === 1 ? image1 : image2" alt="">
+          <td v-for="(m, j) in size" class="cell text-center" :id="i + '' + j" v-on:click="setCell">
+            <img v-if='board[i][j] > 0' :key="board[i][j]" class="flip-tile position-relative" :src="board[i][j] === 1 ? image1 : image2" alt="">
             <span v-else-if='board[i][j] < 0' class="dot d-inline-block rounded-circle mt-1 jelly-dot"/>
           </td>
         </tr>
       </table>
-      <div class="float-right">
-        <b-button class="plus-minus-btn" @click="request('resize/-')" :disabled="size === 4"><b-icon-dash/></b-button>
-        <b-button class="plus-minus-btn" @click="request('resize/.')" :disabled="size === 8"><b-icon-dot/></b-button>
-        <b-button class="plus-minus-btn" @click="request('resize/+')" :disabled="size === 10"><b-icon-plus/></b-button>
-      </div>
-      <b-collapse tag="div" v-if="size > 0" class="pt-2 pb-2 pl-3 pr-3" id="info-panel">
-        <div><span>Difficulty:</span><span class="float-right font-weight-bold">{{ displayedDifficulty }}</span></div>
-        <div><span>Current turn:</span><span class="float-right font-weight-bold">{{ currentPlayerName }}</span></div>
-        <div><span>Mode:</span><span class="float-right font-weight-bold">{{ gameMode }}</span></div>
+      <v-item-group class="float-right" id="float-right">
+        <v-btn text @click="request('resize/-')" :disabled="size === 4">
+          <v-icon>mdi-minus</v-icon>
+        </v-btn>
+        <v-btn text @click="request('resize/.')" :disabled="size === 8">
+          <v-icon>mdi-circle-small</v-icon>
+        </v-btn>
+        <v-btn text @click="request('resize/+')" :disabled="size === 10">
+          <v-icon>mdi-plus</v-icon>
+        </v-btn>
+      </v-item-group>
+      <b-collapse tag="div" class="pt-2 pb-2 pl-3 pr-3" id="info-panel">
+        <div><span>Difficulty:</span><span class="float-right">{{ displayedDifficulty }}</span></div>
+        <div><span>Current turn:</span><span class="float-right">{{ currentPlayerName }}</span></div>
+        <div><span>Mode:</span><span class="float-right">{{ gameMode }}</span></div>
       </b-collapse>
-      <b-button v-b-toggle.info-panel class="info-btn"><b-icon-chevron-compact-down/></b-button>
-      <new-game-modal></new-game-modal>
-      <game-over-modal :source1="image1" :source2="image2"></game-over-modal>
+      <v-btn text v-b-toggle.info-panel id="info-btn">
+        <v-icon>mdi-chevron-down</v-icon>
+      </v-btn>
+      <new-game-modal/>
+      <game-over-modal :source1="image1" :source2="image2"/>
     </div>
   </div>
   <div v-else class="d-flex justify-content-center text-center align-items-center" style="min-height: 75vh">
-    <b-spinner style="width: 5rem; height: 5rem"></b-spinner>
+    <v-progress-circular indeterminate size="150" width="5" color="grey"/>
   </div>
 </template>
 
@@ -75,7 +83,7 @@ export default {
     const store = this.$store
     function checkWidth() {
       if (location.pathname === '/othello') {
-        const show = window.innerWidth && window.innerWidth > 768;
+        const show = window.innerWidth && window.innerWidth > 767;
         store.dispatch("changeSidebarVisibility", show);
       }
     }
@@ -113,15 +121,7 @@ export default {
   width: 48px;
   height: 48px;
   transition: all 0.2s ease-in;
-}
-
-.game-table .cell img {
-  position: relative
-}
-
-/* Overrides bootstrap class */
-.game-table .cell.border-dark {
-  border-color: rgba(20,20,20,0.8) !important;
+  border: 1px solid rgba(20, 20, 20, 0.8);
 }
 
 .game-table .cell:hover {
@@ -137,21 +137,21 @@ export default {
 
 #info-panel {
   background: lightgray;
-  max-width: 230px;
+  max-width: 200px;
   border-bottom-left-radius: 7px;
   border-bottom-right-radius: 7px;
   box-shadow: 0 10px 16px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19), 0 5px 5px -3px rgba(25,25,25,0.7) inset;
 }
 
-.info-btn,.plus-minus-btn,.info-btn:hover {
-  color: black !important;
-  background: none !important;
-  border: none !important;
-}
-
 #info-panel div {
   cursor: default;
 }
+
+#float-right .v-btn, #info-btn {
+  min-width: 38px;
+  width: 38px;
+}
+
 @media (max-width: 800px) {
   .game-table .column-header {
     font-size: 12px;
@@ -180,10 +180,7 @@ export default {
 }
 
 @keyframes flip {
-  0% {
-    transform: rotateY(0deg);
-  }
-  100% {
+  to {
     transform: rotateY(180deg);
   }
 }
@@ -207,9 +204,7 @@ export default {
 }
 
 .flip-tile {
-  animation: flip 0.5s forwards;
-  pointer-events: none;
-  animation-timing-function: cubic-bezier(0.04, 0.4, 0.8, 1.40);
+  animation: flip 0.5s forwards cubic-bezier(0.04, 0.4, 0.8, 1.40);
 }
 
 .jelly-dot {

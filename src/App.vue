@@ -1,11 +1,11 @@
 <template>
-  <div class="user-select-none app-container">
+  <v-app class="user-select-none">
     <navbar class="animate__animated animate__slideInDown animate__faster"/>
     <sidebar/>
     <transition :enter-active-class=transitionEnter :leave-active-class=transitionExit mode="out-in">
       <router-view/>
     </transition>
-  </div>
+  </v-app>
 </template>
 
 <script>
@@ -38,7 +38,7 @@ export default {
 }
 </script>
 <style scoped>
-.modal-open .app-container {
+.modal-open .v-application {
   transition: all 0.2s;
   filter: blur(10px);
 }
