@@ -1,6 +1,6 @@
 <template>
   <b-collapse tag="nav" class="sidenav collapse position-fixed pl-0" id="sidebar" :visible="sidebarVisible">
-    <v-btn block text v-b-modal.new-game-modal>New Game</v-btn>
+    <new-game-modal/>
     <v-btn v-for="element in ['Undo', 'Redo', 'Hint']" block text @click="request(element.toLowerCase())" :key="element">
       {{ element }}
     </v-btn>
@@ -32,9 +32,10 @@
 
 <script>
 import {mapActions, mapGetters} from 'vuex';
-
+import NewGameModal from "@/components/NewGameModal.vue";
 export default {
     name: "Sidebar",
+    components: {NewGameModal},
     methods: {
         ...mapActions([
             'request',

@@ -37,9 +37,18 @@ export default {
   }
 }
 </script>
-<style scoped>
+<style>
+/* blur effect for bootstrap modal */
 .modal-open .v-application {
   transition: all 0.2s;
   filter: blur(10px);
+}
+
+/* blur effect for vuetify dialog */
+.v-overlay--active .v-overlay__scrim {
+  transition: all 0.2s;
+  background-color: rgba(0,0,0,0.5) !important;
+  opacity: 1 !important;
+  backdrop-filter: blur(10px) !important;
 }
 </style>

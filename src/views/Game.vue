@@ -31,7 +31,6 @@
       <v-btn text v-b-toggle.info-panel id="info-btn">
         <v-icon>mdi-chevron-down</v-icon>
       </v-btn>
-      <new-game-modal/>
       <game-over-modal :source1="image1" :source2="image2"/>
     </div>
   </div>
@@ -41,14 +40,13 @@
 </template>
 
 <script>
-import NewGameModal from "@/components/NewGameModal";
 import TheHeader from "@/components/Header";
 import {mapActions, mapGetters} from "vuex";
 import GameOverModal from '../components/GameOverModal.vue';
 
 export default {
   name: "Game",
-  components: { TheHeader, NewGameModal, GameOverModal },
+  components: { TheHeader, GameOverModal },
   data() {
     return {
       background: require("../assets/back.jpg"),

@@ -1,25 +1,49 @@
 <template>
-  <b-modal id="new-game-modal" @hide="hide" centered>
-    <template #modal-header>
-      <h5>Start new game?</h5>
+  <v-dialog elevation="10" max-width="400" v-model="dialog">
+    <template v-slot:activator="{on, attrs}">
+    <v-btn class="toggle" text block v-bind="attrs" v-on="on">New Game</v-btn>
     </template>
-    <template #default>
-      <p class="text-center">Current score will be lost.</p>
-    </template>
-    <template #modal-footer="{ ok, cancel }">
-      <b-button variant="outline-secondary" @click="cancel">Cancel</b-button>
-      <b-button variant="primary" @click="ok">Ok</b-button>
-    </template>
-  </b-modal>
+    <v-card>
+      <v-card-title class="headline">Start new Game?</v-card-title>
+      <v-divider/>
+      <v-card-text class="text-center">Current score will be lost.</v-card-text>
+      <v-divider/>
+      <v-card-actions>
+        <v-spacer/>
+        <v-btn color="secondary" text @click="close(false)">
+          Cancel
+        </v-btn>
+        <v-btn color="primary" text @click="close(true)">
+          Ok
+        </v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script>
 export default {
   name: "NewGameModal",
-  methods: {
-    hide(ev) {
-      if (ev.trigger === "ok") this.$store.dispatch("newGame");
-    },
+  data() {
+    return {
+      dialog: false
+    }
   },
+  methods: {
+    close(startNewGame) {
+      if (startNewGame)
+        this.$store.dispatch("newGame")
+      this.dialog = false;
+    }
+  }
 };
 </script>
+
+<style scoped>
+.toggle {
+  min-height: 42px;
+  justify-content: start;
+  font-size: 17px !important;
+  color: #818181 !important;
+}
+</style>
