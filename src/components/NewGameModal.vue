@@ -1,7 +1,7 @@
 <template>
   <v-dialog elevation="10" max-width="400" v-model="dialog">
     <template v-slot:activator="{on, attrs}">
-    <v-btn class="toggle" text block v-bind="attrs" v-on="on">New Game</v-btn>
+      <v-btn text block v-bind="attrs" v-on="on">New Game</v-btn>
     </template>
     <v-card>
       <v-card-title class="headline">Start new Game?</v-card-title>
@@ -40,12 +40,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-.toggle {
-  min-height: 42px;
-  justify-content: start;
-  font-size: 17px !important;
-  color: #818181 !important;
-}
-</style>

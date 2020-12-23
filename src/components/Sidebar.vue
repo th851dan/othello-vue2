@@ -1,48 +1,52 @@
 <template>
-  <b-collapse tag="nav" class="sidenav collapse position-fixed pl-0" id="sidebar" :visible="sidebarVisible">
+  <b-collapse tag="nav" class="sidenav position-fixed" id="sidebar" :visible="sidebarVisible">
     <new-game-modal/>
-    <v-btn v-for="element in ['Undo', 'Redo', 'Hint']" block text @click="request(element.toLowerCase())" :key="element">
+    <v-btn text block v-for="element in ['Undo', 'Redo', 'Hint']" @click="request(element.toLowerCase())" :key="element">
       {{ element }}
     </v-btn>
-    <v-btn text block v-b-toggle.difficulty class="dropdown-toggle">
-      Difficulty
-    </v-btn>
-    <b-collapse tag="div" class="collapsible-panel" id="difficulty">
-      <v-btn text block
-             @click="changeDifficulty(element.key)"
-             v-for="element in [{key: 'e', text: 'Easy'}, {key: 'm', text:'Normal'}, {key: 'd' ,text:'Hard'}]"
-             :key="element.key"
-             :class="{
-                    'text-body' : difficulty === element.text,
-                    'disabled': gameMode !== '1'
-                  }"
-      >{{ element.text }}</v-btn>
-    </b-collapse>
-    <v-btn block text v-b-toggle.player-mode class="dropdown-toggle">Mode</v-btn>
-    <b-collapse tag="div" class="collapsible-panel" id="player-mode">
-      <v-btn text block
-             v-for="element in [{key: '2', text: 'Player vs Player'}, {key: '1', text:'Player vs Bot'}, {key: '0', text:'Bot vs Bot'}]"
-             :class="{'text-body': gameMode === element.key}"
-             :key="element.key"
-             @click="changeGameMode(element.key)"
-      >{{element.text}}</v-btn>
-    </b-collapse>
+    <v-expansion-panels flat multiple>
+      <v-expansion-panel>
+        <v-expansion-panel-header>Difficulty</v-expansion-panel-header>
+        <v-expansion-panel-content class="collapsible-panel">
+          <v-btn text block
+                 @click="changeDifficulty(element.key)"
+                 v-for="element in [{key: 'e', text: 'Easy'}, {key: 'm', text:'Normal'}, {key: 'd' ,text:'Hard'}]"
+                 :key="element.key"
+                 :class="{'active' : difficulty === element.text, 'disabled': gameMode !== '1'}"
+          >{{ element.text }}
+          </v-btn>
+        </v-expansion-panel-content>
+      </v-expansion-panel>
+      <v-expansion-panel>
+        <v-expansion-panel-header>Mode</v-expansion-panel-header>
+        <v-expansion-panel-content class="collapsible-panel">
+          <v-btn text block
+                 v-for="element in [{key: '2', text: 'Player vs Player'}, {key: '1', text:'Player vs Bot'}, {key: '0', text:'Bot vs Bot'}]"
+                 :class="{'active': gameMode === element.key}"
+                 :key="element.key"
+                 @click="changeGameMode(element.key)"
+          >{{ element.text }}
+          </v-btn>
+        </v-expansion-panel-content>
+      </v-expansion-panel>
+    </v-expansion-panels>
   </b-collapse>
 </template>
 
 <script>
 import {mapActions, mapGetters} from 'vuex';
 import NewGameModal from "@/components/NewGameModal.vue";
+
 export default {
-    name: "Sidebar",
-    components: {NewGameModal},
-    methods: {
-        ...mapActions([
-            'request',
-            'changeDifficulty',
-            'changeGameMode'
-        ]),
-    },
+  name: "Sidebar",
+  components: {NewGameModal},
+  methods: {
+    ...mapActions([
+      'request',
+      'changeDifficulty',
+      'changeGameMode'
+    ]),
+  },
   computed: {
     ...mapGetters({
       sidebarVisible: "getSidebarVisibility",
@@ -60,7 +64,7 @@ export default {
   transition: all ease-in-out 0.2s;
   z-index: 1;
   backdrop-filter: blur(5px);
-  background-color:rgba(248, 249, 250, 0.72);
+  background-color: rgba(248, 249, 250, 0.72);
   overflow-y: auto;
   margin-top: -57px;
   padding-top: 100px;
@@ -75,11 +79,30 @@ export default {
   display: none;
 }
 
-.sidenav button {
+/deep/ button {
+  width: 100%;
+  transition: all 0.3s;
+  padding-left: 16px;
+  text-transform: uppercase;
+  font-weight: 500;
   min-height: 42px;
+  height: 42px  !important;
   justify-content: start;
-  font-size: 17px;
-  color: #818181;
+  font-size: 17px !important;
+  color: #818181 !important;
+}
+
+/deep/ button.active {
+  color: #222222 !important;
+}
+
+/deep/ .v-expansion-panel {
+  padding: 0;
+  background: none !important;
+}
+
+/deep/ .v-expansion-panel-content__wrap {
+  padding: 0;
 }
 
 .sidenav.collapse {

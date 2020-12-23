@@ -1,5 +1,5 @@
 <template>
-  <v-dialog elevation="10" max-width="400" v-model="isVisible">
+  <v-dialog elevation="10" max-width="400" v-model="isVisible" @click:outside="close(false)">
     <v-card>
       <v-card-title class="headline">{{ title }}</v-card-title>
       <v-divider/>

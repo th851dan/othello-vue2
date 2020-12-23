@@ -1,14 +1,14 @@
 <template>
   <nav class="navbar navbar-expand-md p-0 navbar-dark">
-    <b-button class="navbar-toggler" v-b-toggle.sidebar>
+    <v-btn dark text class="navbar-toggler" @click="toggleSidebar(!sidebarVisible)">
       <v-icon dark>mdi-menu</v-icon>
-    </b-button>
+    </v-btn>
     <router-link class="navbar-brand d-md-inline-flex align-items-center pl-3" to="/othello">
       <v-icon dark aria-hidden="true">mdi-record-circle-outline</v-icon>thello
     </router-link>
-    <b-button v-b-toggle.navigation class="navbar-toggler ml-auto">
+    <v-btn dark text v-b-toggle.navigation class="navbar-toggler ml-auto">
       <v-icon dark>mdi-chevron-left</v-icon>
-    </b-button>
+    </v-btn>
     <b-collapse tag="ul" id="navigation" class="navbar-nav collapse d-md-flex flex-row ml-md-auto">
       <router-link
           v-for="element in [{route: '/', text: 'Home'}, {route: '/othello', text: 'Game'}, {route: '/about', text: 'About'}]"
@@ -63,6 +63,9 @@
   }
 
   .navbar-toggler, .navbar-toggler:hover {
+    min-width: 38px !important;
+    width: 38px;
+    border: none;
     background: none !important;
   }
 
@@ -82,3 +85,21 @@
   }
 }
 </style>
+
+<script>
+import {mapActions, mapGetters} from "vuex";
+
+export default {
+  name: "Navbar",
+  computed: {
+    ...mapGetters({
+      sidebarVisible: "getSidebarVisibility"
+    })
+  },
+  methods: {
+    ...mapActions({
+      toggleSidebar: "changeSidebarVisibility"
+    })
+  }
+}
+</script>

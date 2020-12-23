@@ -2,33 +2,36 @@
   <div v-if="size > 0">
     <div class="d-table m-auto animate__animated animate__slideInDown animate__faster">
       <the-header :source1="image1" :source2="image2" :num-black="numBlack" :num-white="numWhite"/>
-      <table class="game-table" :style="{ backgroundImage: 'url(' + background + ')' }">
-        <th v-for="i in size + 1" class="column-header text-center" >{{ columnHeader(i) }}</th>
-        <tr v-for="(n, i) in size">
-          <th class ="row-header text-center">{{ n }}</th>
-          <td v-for="(m, j) in size" class="cell text-center" :id="i + '' + j" v-on:click="setCell">
-            <img v-if='board[i][j] > 0' :key="board[i][j]" class="flip-tile position-relative" :src="board[i][j] === 1 ? image1 : image2" alt="">
-            <span v-else-if='board[i][j] < 0' class="dot d-inline-block rounded-circle mt-1 jelly-dot"/>
-          </td>
-        </tr>
-      </table>
-      <v-item-group class="float-right" id="float-right">
-        <v-btn text @click="request('resize/-')" :disabled="size === 4">
-          <v-icon>mdi-minus</v-icon>
-        </v-btn>
-        <v-btn text @click="request('resize/.')" :disabled="size === 8">
-          <v-icon>mdi-circle-small</v-icon>
-        </v-btn>
-        <v-btn text @click="request('resize/+')" :disabled="size === 10">
-          <v-icon>mdi-plus</v-icon>
+      <v-sheet elevation="10" rounded="lg">
+        <table class="game-table" :style="{ backgroundImage: 'url(' + background + ')' }">
+          <th v-for="i in size + 1" class="column-header text-center" >{{ columnHeader(i) }}</th>
+          <tr v-for="(n, i) in size">
+            <th class ="row-header text-center">{{ n }}</th>
+            <td v-for="(m, j) in size" class="cell text-center" :id="i + '' + j" v-on:click="setCell">
+              <img v-if='board[i][j] > 0' :key="board[i][j]" class="flip-tile position-relative" :src="board[i][j] === 1 ? image1 : image2" alt="">
+              <span v-else-if='board[i][j] < 0' class="dot d-inline-block rounded-circle mt-1 jelly-dot"/>
+            </td>
+          </tr>
+        </table>
+      </v-sheet>
+      <v-item-group class="float-right mr-2" id="float-right">
+        <v-btn text
+               v-for="element in [
+                   {'key': '-', 'disabled': 4, 'icon': 'mdi-minus'},
+                   {'key': '.', 'disabled': 8, 'icon': 'mdi-circle-small'},
+                   {'key': '+', 'disabled': 10, 'icon': 'mdi-plus'}]"
+               @click="request('resize/' + element.key)"
+               :key="element.key"
+               :disabled="size === element.disabled">
+          <v-icon>{{element.icon}}</v-icon>
         </v-btn>
       </v-item-group>
-      <b-collapse tag="div" class="pt-2 pb-2 pl-3 pr-3" id="info-panel">
+      <b-collapse tag="div" class="ml-2 pt-2 pb-2 pl-3 pr-3" id="info-panel">
         <div><span>Difficulty:</span><span class="float-right">{{ difficulty }}</span></div>
         <div><span>Current turn:</span><span class="float-right">{{ currentPlayerName }}</span></div>
         <div><span>Mode:</span><span class="float-right">{{ gameMode }}</span></div>
       </b-collapse>
-      <v-btn text v-b-toggle.info-panel id="info-btn">
+      <v-btn text v-b-toggle.info-panel id="info-btn" class="ml-2">
         <v-icon>mdi-chevron-down</v-icon>
       </v-btn>
       <game-over-modal :source1="image1" :source2="image2"/>
@@ -95,10 +98,12 @@ export default {
 </script>
 
 <style scoped>
+.d-table .v-sheet {
+  border: 6px solid saddlebrown;
+}
+
 .game-table {
   background: rgb(32,95,25);
-  border: 5px solid saddlebrown;
-  box-shadow: 0 10px 16px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.29);
   background-size: cover;
 }
 
