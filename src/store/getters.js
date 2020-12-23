@@ -1,7 +1,4 @@
 export default {
-    getDifficulty(state) {
-        return state.difficulty
-    },
     getBoard(state) {
         return state.board
     },
@@ -31,7 +28,11 @@ export default {
         const secondPlayer = state.mode < '2' ? 'Bot' : "Player";
         return firstPlayer + " vs " + secondPlayer;
     },
-    getDisplayedDifficulty(state) {
+    getDifficulty(state) {
         return state.mode === '2' ? "-" : state.difficulty;
+    },
+    getGameOverTitle(state) {
+        if (state.numBlack === state.numWhite) return "Game Over";
+        else return state.numBlack > state.numWhite ? "Black wins!" : "White wins!";
     }
 }

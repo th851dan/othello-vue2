@@ -46,7 +46,7 @@ export default {
   computed: {
     ...mapGetters({
       sidebarVisible: "getSidebarVisibility",
-      difficulty: "getDisplayedDifficulty",
+      difficulty: "getDifficulty",
       gameMode: "getMode"
     })
   }

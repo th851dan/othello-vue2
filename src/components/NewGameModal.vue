@@ -6,7 +6,9 @@
     <v-card>
       <v-card-title class="headline">Start new Game?</v-card-title>
       <v-divider/>
-      <v-card-text class="text-center">Current score will be lost.</v-card-text>
+      <v-card-text>
+        <v-row justify="center">Current score will be lost.</v-row>
+      </v-card-text>
       <v-divider/>
       <v-card-actions>
         <v-spacer/>

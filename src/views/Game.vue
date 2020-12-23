@@ -24,7 +24,7 @@
         </v-btn>
       </v-item-group>
       <b-collapse tag="div" class="pt-2 pb-2 pl-3 pr-3" id="info-panel">
-        <div><span>Difficulty:</span><span class="float-right">{{ displayedDifficulty }}</span></div>
+        <div><span>Difficulty:</span><span class="float-right">{{ difficulty }}</span></div>
         <div><span>Current turn:</span><span class="float-right">{{ currentPlayerName }}</span></div>
         <div><span>Mode:</span><span class="float-right">{{ gameMode }}</span></div>
       </b-collapse>
@@ -56,14 +56,13 @@ export default {
   },
   computed: {
     ...mapGetters({
-      difficulty: "getDifficulty",
       numBlack: "getNumBlack",
       numWhite: "getNumWhite",
       board: "getBoard",
       size: "getSize",
       currentPlayerName: "getDisplayedPlayerName",
       gameMode: "getDisplayedGameMode",
-      displayedDifficulty: "getDisplayedDifficulty"
+      difficulty: "getDifficulty"
     }),
   },
   methods: {
