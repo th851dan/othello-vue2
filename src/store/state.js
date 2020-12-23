@@ -5,9 +5,9 @@ export default {
   numWhite: 0,
   difficulty: 'Normal',
   size: 0,
-  sidebarShow: false,
+  isSidebarVisible: false,
   gameOverModalVisible: false,
-  status: '',
+  isMoveIllegal: false,
   currentPlayer: {},
   mode: '1'
 }

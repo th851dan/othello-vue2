@@ -38,10 +38,10 @@ export default {
           break;
         case 'game-status-changed':
           const { new_status } = object;
-          dispatch('setStatus', new_status)
           if (new_status === "GAME_OVER") {
             setTimeout(() => dispatch('showGameOverModal'), 500);
-          }
+          } else if (new_status === "ILLEGAL")
+            dispatch('setIsMoveIllegal', true);
           break;
         case "player-changed":
           dispatch('setPlayer', object);
@@ -59,6 +59,7 @@ export default {
     }
   },
   setCell({ dispatch, commit }, cellId) {
+    commit('setIsMoveIllegal' ,false)
     commit('setCell', cellId)
   },
 
@@ -71,9 +72,6 @@ export default {
   },
   changeGameMode({ commit }, mode) {
     commit('request', 'setupplayers/' + mode)
-  },
-  setStatus({ commit }, status) {
-    commit('changeStatus', status)
   },
   changeSidebarVisibility({ commit }, isVisible) {
     commit('changeSidebarVisibility', isVisible)
@@ -92,5 +90,8 @@ export default {
   },
   setMode({ commit }, mode) {
     commit('setMode', mode)
+  },
+  setIsMoveIllegal({ commit }, mode) {
+    commit('setIsMoveIllegal', mode)
   }
 }

@@ -28,18 +28,18 @@ export default {
     state.socket.send(command);
   },
   changeSidebarVisibility(state, isVisible){
-    state.sidebarShow = isVisible;
+    state.isSidebarVisible = isVisible;
   },
   changeGameOverModalVisibility(state, isVisible){
     state.gameOverModalVisible = isVisible;
-  },
-  changeStatus(state, status){
-    state.status = status;
   },
   setPlayer(state, player) {
     state.currentPlayer = player;
   },
   setMode(state, mode) {
     state.mode = mode;
+  },
+  setIsMoveIllegal(state, illegalState) {
+    state.isMoveIllegal = illegalState;
   },
 }

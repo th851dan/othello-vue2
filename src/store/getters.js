@@ -12,7 +12,7 @@ export default {
         return state.size
     },
     getSidebarVisibility(state) {
-        return state.sidebarShow
+        return state.isSidebarVisible
     },
     getMode(state) {
         return state.mode;
@@ -34,5 +34,8 @@ export default {
     getGameOverTitle(state) {
         if (state.numBlack === state.numWhite) return "Game Over";
         else return state.numBlack > state.numWhite ? "Black wins!" : "White wins!";
+    },
+    getIsMoveIllegal(state) {
+        return state.isMoveIllegal;
     }
 }

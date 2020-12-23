@@ -25,8 +25,8 @@
       <p>Players will then continue to move alternately until they get to the end of the game and a winner is decided. This decision is reached by identifying which of the two opponents has the most pieces on the board.</p>
     </div>
   </v-sheet>
-  <v-btn id="floating-btn" large color="rgba(80,90,100,0.7)" elevation="2" fab @click="goBack" class="position-fixed animate__animated animate__fadeInUp animate__faster animate__delay-1s">
-    <v-icon color="white">mdi-reply</v-icon>
+  <v-btn fixed bottom right large color="rgba(80,90,100,0.7)" dark elevation="3" fab @click="goBack" class="animate__animated animate__fadeInUp animate__faster animate__delay-1s">
+    <v-icon>mdi-reply</v-icon>
   </v-btn>
   </div>
 </template>
@@ -40,20 +40,13 @@ export default {
   methods: {
     goBack: () => history.back()
   },
-  mounted() {
-    document.title = "About"
-  }
+  mounted: () => document.title = "About"
 }
 </script>
 <style scoped>
 
 .rules > .content img {
   width: 500px;
-}
-
-#floating-btn {
-  bottom: 1rem;
-  right: 1rem;
 }
 
 @media (max-width: 800px) {

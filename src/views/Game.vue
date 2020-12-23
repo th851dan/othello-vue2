@@ -36,6 +36,7 @@
       </v-btn>
       <game-over-modal :source1="image1" :source2="image2"/>
     </div>
+    <illegal-move-snackbar/>
   </div>
   <div v-else class="d-flex justify-content-center text-center align-items-center" style="min-height: 75vh">
     <v-progress-circular indeterminate size="150" width="5" color="grey"/>
@@ -46,10 +47,11 @@
 import TheHeader from "@/components/Header";
 import {mapActions, mapGetters} from "vuex";
 import GameOverModal from '../components/GameOverModal.vue';
+import IllegalMoveSnackbar from "@/components/IllegalMoveSnackbar";
 
 export default {
   name: "Game",
-  components: { TheHeader, GameOverModal },
+  components: {IllegalMoveSnackbar, TheHeader, GameOverModal },
   data() {
     return {
       background: require("../assets/back.jpg"),
