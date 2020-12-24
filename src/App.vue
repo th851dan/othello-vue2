@@ -5,12 +5,16 @@
     <transition :enter-active-class=transitionEnter :leave-active-class=transitionExit mode="out-in">
       <router-view/>
     </transition>
+    <v-snackbar color="error" bottom v-model="getIsDisconnected" :timeout="-1">
+      <v-row justify="center" align="center"><v-icon>mdi-alert-circle</v-icon>Disconnected from server</v-row>
+    </v-snackbar>
   </v-app>
 </template>
 
 <script>
 import Navbar from "@/components/Navbar.vue";
 import Sidebar from "@/components/Sidebar.vue";
+import {mapGetters} from "vuex";
 export default {
   name: 'App',
   data() {
@@ -18,6 +22,9 @@ export default {
       transitionEnter: '',
       transitionExit: '',
     }
+  },
+  computed: {
+    ...mapGetters(["getIsDisconnected"])
   },
   components: {Navbar, Sidebar},
   mounted() {

@@ -1,14 +1,14 @@
 <template>
   <div v-if="size > 0">
-    <div class="d-table m-auto animate__animated animate__slideInDown animate__faster">
+    <div class="d-table ma-auto animate__animated animate__slideInDown animate__faster">
       <the-header :source1="image1" :source2="image2" :num-black="numBlack" :num-white="numWhite"/>
       <v-sheet elevation="10" rounded="lg">
         <table class="game-table" :style="{ backgroundImage: 'url(' + background + ')' }">
           <th v-for="i in size + 1" class="column-header text-center" >{{ columnHeader(i) }}</th>
           <tr v-for="(n, i) in size">
             <th class ="row-header text-center">{{ n }}</th>
-            <td v-for="(m, j) in size" class="cell text-center" :id="i + '' + j" v-on:click="setCell">
-              <img v-if='board[i][j] > 0' :key="board[i][j]" class="flip-tile position-relative" :src="board[i][j] === 1 ? image1 : image2" alt="">
+            <td v-for="(m, j) in size" class="cell text-center" :id="i + '' + j" @click="setCell($event.currentTarget.id)">
+              <img draggable="false" v-if='board[i][j] > 0' :key="board[i][j]" class="flip-tile position-relative" :src="board[i][j] === 1 ? image1 : image2" alt="">
               <span v-else-if='board[i][j] < 0' class="dot d-inline-block rounded-circle mt-1 jelly-dot"/>
             </td>
           </tr>
@@ -26,19 +26,24 @@
           <v-icon>{{element.icon}}</v-icon>
         </v-btn>
       </v-item-group>
-      <b-collapse tag="div" class="ml-2 pt-2 pb-2 pl-3 pr-3" id="info-panel">
+      <b-collapse class="ml-2 py-2 px-3" id="info-panel" v-model="infoVisible">
         <div><span>Difficulty:</span><span class="float-right">{{ difficulty }}</span></div>
         <div><span>Current turn:</span><span class="float-right">{{ currentPlayerName }}</span></div>
         <div><span>Mode:</span><span class="float-right">{{ gameMode }}</span></div>
       </b-collapse>
-      <v-btn text v-b-toggle.info-panel id="info-btn" class="ml-2">
-        <v-icon>mdi-chevron-down</v-icon>
-      </v-btn>
+      <v-tooltip bottom open-delay="750">
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn text @click="infoVisible = !infoVisible" id="info-btn" class="ml-2" v-bind="attrs" v-on="on">
+            <v-icon :class="{'rotate-chevron': infoVisible}">mdi-chevron-down</v-icon>
+          </v-btn>
+        </template>
+        <span v-text="(infoVisible ? 'Hide' : 'Show') + ' info'"/>
+      </v-tooltip>
       <game-over-modal :source1="image1" :source2="image2"/>
     </div>
     <illegal-move-snackbar/>
   </div>
-  <div v-else class="d-flex justify-content-center text-center align-items-center" style="min-height: 75vh">
+  <div v-else class="d-flex justify-center text-center align-center" style="min-height: 75vh">
     <v-progress-circular indeterminate size="150" width="5" color="grey"/>
   </div>
 </template>
@@ -57,6 +62,7 @@ export default {
       background: require("../assets/back.jpg"),
       image1: require("../assets/1.png"),
       image2: require("../assets/2.png"),
+      infoVisible: false
     };
   },
   computed: {
@@ -71,15 +77,12 @@ export default {
     }),
   },
   methods: {
-    setCell(evt) {
-      this.$store.dispatch("setCell", evt.currentTarget.id);
-    },
     columnHeader: (header) => {
       if (header > 1) {
         return String.fromCharCode(header + 63);
       }
     },
-    ...mapActions(['request'])
+    ...mapActions(['request', 'setCell'])
   },
   mounted() {
     const store = this.$store
@@ -105,7 +108,8 @@ export default {
 }
 
 .game-table {
-  background: rgb(32,95,25);
+  border-collapse: collapse;
+  background: rgb(32, 95, 25);
   background-size: cover;
 }
 
@@ -152,8 +156,13 @@ export default {
 }
 
 #float-right .v-btn, #info-btn {
+  transition: all .3s cubic-bezier(.25, .8, .5, 1);
   min-width: 38px;
   width: 38px;
+}
+
+.rotate-chevron {
+  transform: rotate(-180deg);
 }
 
 @media (max-width: 800px) {

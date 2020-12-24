@@ -6,12 +6,16 @@ export default {
     webSocket.onopen = () => {
       console.info('Connected to server: ' + webSocket.url)
       webSocket.send('connect')
+      commit('setIsDisconnected', false);
     }
 
     webSocket.onmessage = message => dispatch('websocketOnMessage', message)
 
     webSocket.onerror = event => console.error(event)
-    webSocket.onclose = () => setTimeout(() => dispatch('connectWebsocket'), 2000)
+    webSocket.onclose = () => {
+      commit('setIsDisconnected', true);
+      setTimeout(() => dispatch('connectWebsocket'), 2000);
+    }
     commit('connectToSocket', webSocket)
   },
 
@@ -93,5 +97,8 @@ export default {
   },
   setIsMoveIllegal({ commit }, mode) {
     commit('setIsMoveIllegal', mode)
+  },
+  setIsDisconnected({ commit }, mode) {
+    commit('setIsDisconnected', mode)
   }
 }

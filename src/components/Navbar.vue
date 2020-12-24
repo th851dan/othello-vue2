@@ -1,27 +1,49 @@
 <template>
-  <nav class="navbar navbar-expand-md p-0 navbar-dark">
-    <v-btn dark text class="navbar-toggler" @click="toggleSidebar(!sidebarVisible)">
+  <b-navbar type="dark" class="p-0">
+    <v-btn class="toggler d-md-none" dark text @click="sidebarVisible = !sidebarVisible">
       <v-icon dark>mdi-menu</v-icon>
     </v-btn>
-    <router-link class="navbar-brand d-md-inline-flex align-items-center pl-3" to="/othello">
+    <router-link to="/othello" class="navbar-brand d-md-inline-flex align-center pl-3">
       <v-icon dark aria-hidden="true">mdi-record-circle-outline</v-icon>thello
     </router-link>
-    <v-btn dark text v-b-toggle.navigation class="navbar-toggler ml-auto">
-      <v-icon dark>mdi-chevron-left</v-icon>
+    <v-btn dark text class="toggler d-md-none ml-auto" @click.stop="navVisible = !navVisible">
+      <v-icon dark class="chevron" :class="{'rotate-chevron': navVisible}">mdi-chevron-left</v-icon>
     </v-btn>
-    <b-collapse tag="ul" id="navigation" class="navbar-nav collapse d-md-flex flex-row ml-md-auto">
+    <b-collapse class="navbar-nav d-md-flex flex-row ml-md-auto" v-model="navVisible">
       <router-link
           v-for="element in [{route: '/', text: 'Home'}, {route: '/othello', text: 'Game'}, {route: '/about', text: 'About'}]"
-          class="nav-link pl-2 pr-2"
+          class="nav-link px-2"
           :key="element.route"
           :to="element.route"
       >{{element.text}}</router-link>
-      <a class="nav-link" href="https://github.com/th851dan/webtech-othello" target="_blank">
+      <a class="nav-link px-2" href="https://github.com/th851dan/webtech-othello" target="_blank">
         <v-icon dark>mdi-github</v-icon>
       </a>
     </b-collapse>
-  </nav>
+  </b-navbar>
 </template>
+
+<script>
+
+export default {
+  name: "Navbar",
+  data() {
+    return {
+      navVisible: false,
+    }
+  },
+  computed: {
+      sidebarVisible: {
+        get() {
+          return this.$store.getters.getSidebarVisibility
+        },
+        set(value) {
+          this.$store.commit('changeSidebarVisibility', value);
+        }
+    }
+  }
+}
+</script>
 
 <style scoped>
 .navbar {
@@ -47,6 +69,14 @@
   padding: 6px;
 }
 
+.chevron {
+  transition: all .3s cubic-bezier(.25, .8, .5, 1);
+}
+
+.rotate-chevron {
+  transform: rotate(-180deg);
+}
+
 .navbar > .navbar-nav a:active {
   background-color: #444444;
 }
@@ -62,7 +92,7 @@
     display: none;
   }
 
-  .navbar-toggler, .navbar-toggler:hover {
+  .toggler, .toggler:hover {
     min-width: 38px !important;
     width: 38px;
     border: none;
@@ -85,21 +115,3 @@
   }
 }
 </style>
-
-<script>
-import {mapActions, mapGetters} from "vuex";
-
-export default {
-  name: "Navbar",
-  computed: {
-    ...mapGetters({
-      sidebarVisible: "getSidebarVisibility"
-    })
-  },
-  methods: {
-    ...mapActions({
-      toggleSidebar: "changeSidebarVisibility"
-    })
-  }
-}
-</script>

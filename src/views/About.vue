@@ -1,10 +1,10 @@
 <template>
   <div>
-  <v-sheet color="grey lighten-1" elevation="5" rounded="lg" class="rules col-12 col-md-9 text-justify mt-3 mt-md-5 mb-3 mb-md-5 ml-auto mr-auto animate__animated animate__fadeInRight">
+  <v-sheet color="grey lighten-1" elevation="5" rounded="lg" class="rules col-12 col-md-9 text-justify my-3 my-md-5 mx-auto animate__animated animate__fadeInRight">
     <div class="content p-3 p-md-5">
       <h1 class="text-center">About Othello</h1>
 
-      <img class="d-block m-auto animate__animated animate__fadeInLeftBig" :src="screenshot" alt="screenshot"/>
+      <img class="d-block ma-auto animate__animated animate__fadeInLeftBig" :src="screenshot" alt="screenshot"/>
 
       <p>Othello is the trading name of a much older board game, Reversi. In both its originally named form and the newer trademark this game has become very popular on computers as much as in board format. Often referred to as a game of abstract strategy, Othello can only be played as a 2 player game. Made up of 8 rows and 8 columns, the board is populated with pieces from both players in turn. Each player’s pieces will be of one colour with the most common occurrence being black and white.</p>
 
@@ -49,7 +49,7 @@ export default {
   width: 500px;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 767px) {
   .rules > .content img {
     width: 75%;
   }

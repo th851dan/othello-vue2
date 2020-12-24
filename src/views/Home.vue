@@ -1,10 +1,10 @@
 <template>
-  <div class="landing-page d-flex justify-content-center align-items-center">
+  <div class="landing-page d-flex justify-center align-center">
     <router-link id="game-start" to="othello" @click.native="request('new')">
-      <div style="cursor: pointer" id="new-game-btn" class="d-flex text-center align-items-center">
+      <v-row justify="center" align="center">
         <v-icon id="play-button">mdi-play-circle-outline</v-icon>
         <span>NEW GAME</span>
-      </div>
+      </v-row>
     </router-link>
   </div>
 </template>

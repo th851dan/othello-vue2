@@ -42,4 +42,7 @@ export default {
   setIsMoveIllegal(state, illegalState) {
     state.isMoveIllegal = illegalState;
   },
+  setIsDisconnected(state, disconnected) {
+    state.isDisconnected = disconnected;
+  },
 }

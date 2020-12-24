@@ -8,6 +8,7 @@ export default {
   isSidebarVisible: false,
   gameOverModalVisible: false,
   isMoveIllegal: false,
+  isDisconnected: false,
   currentPlayer: {},
   mode: '1'
 }

@@ -37,5 +37,8 @@ export default {
     },
     getIsMoveIllegal(state) {
         return state.isMoveIllegal;
+    },
+    getIsDisconnected(state) {
+        return state.isDisconnected;
     }
 }
