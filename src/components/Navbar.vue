@@ -1,26 +1,25 @@
 <template>
-  <b-navbar type="dark" class="p-0">
-    <v-btn class="toggler d-md-none" dark text @click="sidebarVisible = !sidebarVisible">
-      <v-icon dark>mdi-menu</v-icon>
-    </v-btn>
-    <router-link to="/othello" class="navbar-brand d-md-inline-flex align-center pl-3">
-      <v-icon dark aria-hidden="true">mdi-record-circle-outline</v-icon>thello
+  <v-app-bar app clipped-left class="app-bar" dark dense height="38px">
+    <v-app-bar-nav-icon class="d-md-none" @click="sidebarVisible = !sidebarVisible"/>
+    <router-link to="/othello" class="brand d-md-flex align-center py-1 pl-3">
+      <v-icon dark>mdi-record-circle-outline</v-icon>thello
     </router-link>
-    <v-btn dark text class="toggler d-md-none ml-auto" @click.stop="navVisible = !navVisible">
+    <v-spacer/>
+    <v-btn dark text class="toggler d-md-none" @click.stop="navVisible = !navVisible">
       <v-icon dark class="chevron" :class="{'rotate-chevron': navVisible}">mdi-chevron-left</v-icon>
     </v-btn>
-    <b-collapse class="navbar-nav d-md-flex flex-row ml-md-auto" v-model="navVisible">
+    <b-collapse class="nav d-md-flex" v-model="navVisible">
       <router-link
           v-for="element in [{route: '/', text: 'Home'}, {route: '/othello', text: 'Game'}, {route: '/about', text: 'About'}]"
-          class="nav-link px-2"
+          class="px-2"
           :key="element.route"
           :to="element.route"
       >{{element.text}}</router-link>
-      <a class="nav-link px-2" href="https://github.com/th851dan/webtech-othello" target="_blank">
+      <a class="px-2" href="https://github.com/th851dan/webtech-othello" target="_blank">
         <v-icon dark>mdi-github</v-icon>
       </a>
     </b-collapse>
-  </b-navbar>
+  </v-app-bar>
 </template>
 
 <script>
@@ -46,71 +45,73 @@ export default {
 </script>
 
 <style scoped>
-.navbar {
-  z-index: 2;
-  background: rgb(69,69,69);
+.app-bar {
   background: linear-gradient(180deg, rgba(70,70,70,0.95) 0%, rgba(50,50,50,0.95) 100%);
-  box-shadow: 2px 3px 6px -1px rgba(0, 0, 0, 0.29);
 }
 
-.navbar > .navbar-brand {
-  background: rgb(117,198,200);
+.brand {
   background: linear-gradient(180deg, rgba(117,198,200,1) 0%, rgba(86,148,150,1) 100%);
+  text-decoration: none;
+  color: #ffffff;
+  font-size: 1.25rem;
   width: 200px;
 }
 
-.navbar > .navbar-nav.collapse {
-  visibility: visible;
-}
-
-.navbar > .navbar-nav a, .navbar .btn {
+a, .nav a {
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.5);
   transition: all 0.2s ease-in;
-  border: none;
   padding: 6px;
 }
 
-.chevron {
-  transition: all .3s cubic-bezier(.25, .8, .5, 1);
+.nav a:hover {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.nav a:active {
+  background-color: #444444;
+}
+
+.nav a.router-link-exact-active {
+  color: white;
+  background-color: rgba(200, 92, 92, 0.2);
 }
 
 .rotate-chevron {
   transform: rotate(-180deg);
 }
 
-.navbar > .navbar-nav a:active {
-  background-color: #444444;
+.toggler, .toggler:hover {
+  transition: all .3s cubic-bezier(.25, .8, .5, 1);
+  min-width: 38px !important;
+  width: 38px;
 }
 
-.navbar > .navbar-nav a.router-link-exact-active {
-  color: white;
-  background-color: rgba(200, 92, 92, 0.2);
+/deep/ .v-toolbar__content {
+  padding-right: 0 !important;
+}
+
+@media (min-width: 768px) {
+  /deep/ .v-toolbar__content {
+    padding: 0 !important;
+  }
 }
 
 @media (max-width: 767px) {
-
-  .navbar .navbar-brand {
+  .brand {
     display: none;
   }
 
-  .toggler, .toggler:hover {
-    min-width: 38px !important;
-    width: 38px;
-    border: none;
-    background: none !important;
-  }
-
-  .navbar>.navbar-nav.collapse {
-    padding: 0;
+  .nav.collapse {
     transition: all 0.3s ease-in-out;
     display: none;
   }
 
-  .navbar>.navbar-nav.collapse.show {
+  .nav.collapse.show {
     display: inline-flex;
   }
 
-  .navbar>.navbar-nav.collapsing {
-    display: inline-flex !important;
+  .nav.collapsing {
     transform: translateX(100%);
   }
 }

@@ -1,13 +1,17 @@
 <template>
-  <v-app class="user-select-none">
+  <v-app style="user-select: none">
     <navbar class="animate__animated animate__slideInDown animate__faster"/>
     <sidebar/>
-    <transition :enter-active-class=transitionEnter :leave-active-class=transitionExit mode="out-in">
-      <router-view/>
-    </transition>
-    <v-snackbar color="error" bottom v-model="getIsDisconnected" :timeout="-1">
-      <v-row justify="center" align="center"><v-icon>mdi-alert-circle</v-icon>Disconnected from server</v-row>
-    </v-snackbar>
+    <v-main app class="pl-0">
+      <v-container fluid>
+        <transition :enter-active-class=transitionEnter :leave-active-class=transitionExit mode="out-in">
+          <router-view/>
+        </transition>
+        <v-snackbar color="error" bottom v-model="getIsDisconnected" :timeout="-1">
+          <v-row justify="center" align="center"><v-icon>mdi-alert-circle</v-icon>Disconnected from server</v-row>
+        </v-snackbar>
+      </v-container>
+    </v-main>
   </v-app>
 </template>
 

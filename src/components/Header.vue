@@ -1,10 +1,11 @@
 <template>
-  <div class="row m-2">
-    <div v-for="element in [{'key': source1, 'value': numBlack}, {'key': source2, 'value': numWhite}]" class="col text-center">
-      <img :src="element.key" alt="●" draggable="false"/>
-      <span class="h4 align-middle" style="cursor: default">{{ element.value }}</span>
-    </div>
-  </div>
+  <v-row>
+    <v-col align-self="center" v-for="element in [{'key': source1, 'value': numBlack, alt: '●'}, {'key': source2, 'value': numWhite, alt: '○'}]" :key="element.key">
+      <v-row align="center" justify="center" class="text-h5 font-weight-medium" style="cursor: default">
+        <img :src="element.key" :alt="element.alt" draggable="false"/>{{ element.value }}
+      </v-row>
+    </v-col>
+  </v-row>
 </template>
 
 <script>

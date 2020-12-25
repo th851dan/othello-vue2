@@ -4,12 +4,12 @@
       <the-header :source1="image1" :source2="image2" :num-black="numBlack" :num-white="numWhite"/>
       <v-sheet elevation="10" rounded="lg">
         <table class="game-table" :style="{ backgroundImage: 'url(' + background + ')' }">
-          <th v-for="i in size + 1" class="column-header text-center" >{{ columnHeader(i) }}</th>
-          <tr v-for="(n, i) in size">
-            <th class ="row-header text-center">{{ n }}</th>
-            <td v-for="(m, j) in size" class="cell text-center" :id="i + '' + j" @click="setCell($event.currentTarget.id)">
-              <img draggable="false" v-if='board[i][j] > 0' :key="board[i][j]" class="flip-tile position-relative" :src="board[i][j] === 1 ? image1 : image2" alt="">
-              <span v-else-if='board[i][j] < 0' class="dot d-inline-block rounded-circle mt-1 jelly-dot"/>
+          <th v-for="i in size + 1" class="column-header text-center">{{ columnHeader(i) }}</th>
+          <tr v-for="(row, i) in board">
+            <th class="row-header text-center">{{ i + 1 }}</th>
+            <td v-for="(cell, j) in row" class="cell text-center" :id="i + '' + j" @click="setCell($event.currentTarget.id)">
+              <img draggable="false" v-if='cell > 0' :key="cell" class="flip-tile" :src="getImage(cell)" :alt="cell === 1 ? '●' : '○'">
+              <span v-else-if='cell < 0' class="dot d-inline-block rounded-circle mt-1 jelly-dot"/>
             </td>
           </tr>
         </table>
@@ -17,16 +17,16 @@
       <v-item-group class="float-right mr-2" id="float-right">
         <v-btn text
                v-for="element in [
-                   {'key': '-', 'disabled': 4, 'icon': 'mdi-minus'},
-                   {'key': '.', 'disabled': 8, 'icon': 'mdi-circle-small'},
-                   {'key': '+', 'disabled': 10, 'icon': 'mdi-plus'}]"
+                   {key: '-', disabled: 4, icon: 'minus'},
+                   {key: '.', disabled: 8, icon: 'circle-small'},
+                   {key: '+', disabled: 10, icon: 'plus'}]"
                @click="request('resize/' + element.key)"
                :key="element.key"
                :disabled="size === element.disabled">
-          <v-icon>{{element.icon}}</v-icon>
+          <v-icon>{{ 'mdi-' + element.icon }}</v-icon>
         </v-btn>
       </v-item-group>
-      <b-collapse class="ml-2 py-2 px-3" id="info-panel" v-model="infoVisible">
+      <b-collapse class="ml-2 py-2 px-3 info-panel" v-model="infoVisible">
         <div><span>Difficulty:</span><span class="float-right">{{ difficulty }}</span></div>
         <div><span>Current turn:</span><span class="float-right">{{ currentPlayerName }}</span></div>
         <div><span>Mode:</span><span class="float-right">{{ gameMode }}</span></div>
@@ -56,7 +56,7 @@ import IllegalMoveSnackbar from "@/components/IllegalMoveSnackbar";
 
 export default {
   name: "Game",
-  components: {IllegalMoveSnackbar, TheHeader, GameOverModal },
+  components: {IllegalMoveSnackbar, TheHeader, GameOverModal},
   data() {
     return {
       background: require("../assets/back.jpg"),
@@ -82,19 +82,15 @@ export default {
         return String.fromCharCode(header + 63);
       }
     },
+    getImage(forValue) {
+      return forValue === 1 ? this.image1 : this.image2;
+    },
     ...mapActions(['request', 'setCell'])
   },
   mounted() {
-    const store = this.$store
-    function checkWidth() {
-      if (location.pathname === '/othello') {
-        const show = window.innerWidth && window.innerWidth > 767;
-        store.dispatch("changeSidebarVisibility", show);
-      }
-    }
-    checkWidth();
+    const show = window.innerWidth && window.innerWidth > 767;
+    this.$store.dispatch("changeSidebarVisibility", show);
     document.title = "Othello"
-    window.onresize = checkWidth;
   },
   beforeDestroy() {
     this.$store.dispatch("changeSidebarVisibility", false);
@@ -140,18 +136,18 @@ export default {
   height: 25px;
   width: 25px;
   background-color: rgba(12, 12, 12, 0.5);
-  box-shadow: 0 1px 2px rgba(97, 120, 97, 0.7), 1px -1px 3px 1px rgba(31,31,31,0.51) inset;
+  box-shadow: 0 1px 2px rgba(97, 120, 97, 0.7), 1px -1px 3px 1px rgba(31, 31, 31, 0.51) inset;
 }
 
-#info-panel {
+.info-panel {
   background: lightgray;
   max-width: 200px;
   border-bottom-left-radius: 7px;
   border-bottom-right-radius: 7px;
-  box-shadow: 0 10px 16px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19), 0 5px 5px -3px rgba(25,25,25,0.7) inset;
+  box-shadow: 0 10px 16px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19), 0 5px 5px -3px rgba(25, 25, 25, 0.7) inset;
 }
 
-#info-panel div {
+.info-panel div {
   cursor: default;
 }
 
@@ -217,6 +213,7 @@ export default {
 }
 
 .flip-tile {
+  position: relative;
   animation: flip 0.5s forwards cubic-bezier(0.04, 0.4, 0.8, 1.40);
 }
 
