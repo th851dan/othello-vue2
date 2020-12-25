@@ -8,17 +8,16 @@
     <v-btn dark text class="toggler d-md-none" @click.stop="navVisible = !navVisible">
       <v-icon dark class="chevron" :class="{'rotate-chevron': navVisible}">mdi-chevron-left</v-icon>
     </v-btn>
-    <b-collapse class="nav d-md-flex" v-model="navVisible">
-      <router-link
-          v-for="element in [{route: '/', text: 'Home'}, {route: '/othello', text: 'Game'}, {route: '/about', text: 'About'}]"
-          class="px-2"
-          :key="element.route"
-          :to="element.route"
-      >{{element.text}}</router-link>
-      <a class="px-2" href="https://github.com/th851dan/webtech-othello" target="_blank">
-        <v-icon dark>mdi-github</v-icon>
-      </a>
-    </b-collapse>
+    <transition name="slide">
+      <div v-show="navVisible" class="nav d-md-flex">
+        <router-link v-for="link in links" class="px-2" :key="link.route" :to="link.route">
+          {{link.text}}
+        </router-link>
+        <a class="px-2" href="https://github.com/th851dan/webtech-othello" target="_blank">
+          <v-icon dark>mdi-github</v-icon>
+        </a>
+      </div>
+    </transition>
   </v-app-bar>
 </template>
 
@@ -29,16 +28,21 @@ export default {
   data() {
     return {
       navVisible: false,
+      links: [
+        {route: '/', text: 'Home'},
+        {route: '/othello', text: 'Game'},
+        {route: '/about', text: 'About'}
+      ]
     }
   },
   computed: {
-      sidebarVisible: {
-        get() {
+    sidebarVisible: {
+      get() {
           return this.$store.getters.getSidebarVisibility
-        },
-        set(value) {
-          this.$store.commit('changeSidebarVisibility', value);
-        }
+      },
+      set(value) {
+        this.$store.commit('changeSidebarVisibility', value);
+      }
     }
   }
 }
@@ -87,6 +91,13 @@ a, .nav a {
   width: 38px;
 }
 
+.slide-enter-active, .slide-leave-active {
+  transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-enter, .slide-leave-to {
+  transform: translateX(100%);
+}
+
 /deep/ .v-toolbar__content {
   padding-right: 0 !important;
 }
@@ -100,19 +111,6 @@ a, .nav a {
 @media (max-width: 767px) {
   .brand {
     display: none;
-  }
-
-  .nav.collapse {
-    transition: all 0.3s ease-in-out;
-    display: none;
-  }
-
-  .nav.collapse.show {
-    display: inline-flex;
-  }
-
-  .nav.collapsing {
-    transform: translateX(100%);
   }
 }
 </style>

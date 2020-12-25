@@ -26,11 +26,13 @@
           <v-icon>{{ 'mdi-' + element.icon }}</v-icon>
         </v-btn>
       </v-item-group>
-      <b-collapse class="ml-2 py-2 px-3 info-panel" v-model="infoVisible">
-        <div><span>Difficulty:</span><span class="float-right">{{ difficulty }}</span></div>
-        <div><span>Current turn:</span><span class="float-right">{{ currentPlayerName }}</span></div>
-        <div><span>Mode:</span><span class="float-right">{{ gameMode }}</span></div>
-      </b-collapse>
+      <transition name="roll">
+        <div class="ml-2 py-2 px-3 info-panel" v-show="infoVisible">
+          <div><span>Difficulty:</span><span class="float-right">{{ difficulty }}</span></div>
+          <div><span>Current turn:</span><span class="float-right">{{ currentPlayerName }}</span></div>
+          <div><span>Mode:</span><span class="float-right">{{ gameMode }}</span></div>
+      </div>
+      </transition>
       <v-tooltip bottom open-delay="750">
         <template v-slot:activator="{ on, attrs }">
           <v-btn text @click="infoVisible = !infoVisible" id="info-btn" class="ml-2" v-bind="attrs" v-on="on">
@@ -149,6 +151,17 @@ export default {
 
 .info-panel div {
   cursor: default;
+}
+
+.roll-enter-active, .roll-leave-active {
+  transition: all .3s cubic-bezier(.25, .8, .5, 1);
+  overflow: hidden;
+  /* max-height required for correct animation */
+  max-height: 100px;
+}
+
+.roll-enter, .roll-leave-to {
+  max-height: 0;
 }
 
 #float-right .v-btn, #info-btn {
