@@ -17,12 +17,15 @@
       <v-item-group class="float-right mr-2" id="float-right">
         <v-btn text
                v-for="element in [
-                   {key: '-', disabled: 4, icon: 'minus'},
-                   {key: '.', disabled: 8, icon: 'circle-small'},
-                   {key: '+', disabled: 10, icon: 'plus'}]"
+                   {key: '-', disabled: 4, icon: 'minus', aria: 'reduce board size'},
+                   {key: '.', disabled: 8, icon: 'circle-small', aria: 'reset bord size'},
+                   {key: '+', disabled: 10, icon: 'plus', aria: 'increase board size'}]"
                @click="request('resize/' + element.key)"
                :key="element.key"
-               :disabled="size === element.disabled">
+               :disabled="size === element.disabled"
+               :aria-label="element.aria"
+               aria-hidden="true"
+        >
           <v-icon>{{ 'mdi-' + element.icon }}</v-icon>
         </v-btn>
       </v-item-group>
@@ -35,7 +38,7 @@
       </transition>
       <v-tooltip bottom open-delay="750">
         <template v-slot:activator="{ on, attrs }">
-          <v-btn text @click="infoVisible = !infoVisible" id="info-btn" class="ml-2" v-bind="attrs" v-on="on">
+          <v-btn text @click="infoVisible = !infoVisible" id="info-btn" class="ml-2" v-bind="attrs" v-on="on" aria-label="show info" aria-hidden="true">
             <v-icon :class="{'rotate-chevron': infoVisible}">mdi-chevron-down</v-icon>
           </v-btn>
         </template>

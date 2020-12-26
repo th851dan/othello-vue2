@@ -1,11 +1,11 @@
 <template>
   <v-app-bar app clipped-left class="app-bar" dark dense height="38px">
-    <v-app-bar-nav-icon class="d-md-none" @click="sidebarVisible = !sidebarVisible"/>
+    <v-app-bar-nav-icon class="d-md-none" @click="sidebarVisible = !sidebarVisible" aria-label="toggle sidebar"/>
     <router-link to="/othello" class="brand d-md-flex align-center py-1 pl-3">
       <v-icon dark>mdi-record-circle-outline</v-icon>thello
     </router-link>
     <v-spacer/>
-    <v-btn dark text class="toggler d-md-none" @click.stop="navVisible = !navVisible">
+    <v-btn dark text class="toggler d-md-none" @click.stop="navVisible = !navVisible" aria-label="toggle navigation">
       <v-icon dark class="chevron" :class="{'rotate-chevron': navVisible}">mdi-chevron-left</v-icon>
     </v-btn>
     <transition name="slide">
@@ -13,7 +13,7 @@
         <router-link v-for="link in links" class="px-2" :key="link.route" :to="link.route">
           {{link.text}}
         </router-link>
-        <a class="px-2" href="https://github.com/th851dan/webtech-othello" target="_blank">
+        <a class="px-2" href="https://github.com/th851dan/webtech-othello" target="_blank" rel="noreferrer" aria-label="github">
           <v-icon dark>mdi-github</v-icon>
         </a>
       </div>
