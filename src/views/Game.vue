@@ -23,9 +23,7 @@
                @click="request('resize/' + element.key)"
                :key="element.key"
                :disabled="size === element.disabled"
-               :aria-label="element.aria"
-               aria-hidden="true"
-        >
+               :aria-label="element.aria">
           <v-icon>{{ 'mdi-' + element.icon }}</v-icon>
         </v-btn>
       </v-item-group>
@@ -38,7 +36,7 @@
       </transition>
       <v-tooltip bottom open-delay="750">
         <template v-slot:activator="{ on, attrs }">
-          <v-btn text @click="infoVisible = !infoVisible" id="info-btn" class="ml-2" v-bind="attrs" v-on="on" aria-label="show info" aria-hidden="true">
+          <v-btn text @click="infoVisible = !infoVisible" id="info-btn" class="ml-2" v-bind="attrs" v-on="on" aria-label="show info">
             <v-icon :class="{'rotate-chevron': infoVisible}">mdi-chevron-down</v-icon>
           </v-btn>
         </template>

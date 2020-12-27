@@ -14,6 +14,9 @@ module.exports = {
         appleMobileWebAppCapable: 'yes',
         appleMobileWebAppStatusBarStyle: 'black',
         workboxPluginMode: 'GenerateSW',
+        workboxOptions: {
+            navigateFallback: 'index.html',
+        },
         manifestOptions: {
             name: 'Othello Vue',
             short_name: 'Othello',
