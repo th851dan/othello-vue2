@@ -4,12 +4,12 @@
       <the-header :source1="image1" :source2="image2" :num-black="numBlack" :num-white="numWhite"/>
       <v-sheet elevation="10" rounded="lg">
         <table class="game-table" :style="{ backgroundImage: 'url(' + background + ')' }">
-          <th v-for="i in size + 1" class="column-header text-center">{{ columnHeader(i) }}</th>
+          <th v-for="i in size + 1" class="column-header text-center align-middle">{{ columnHeader(i) }}</th>
           <tr v-for="(row, i) in board">
             <th class="row-header text-center">{{ i + 1 }}</th>
-            <td v-for="(cell, j) in row" class="cell text-center" :id="i + '' + j" @click="setCell($event.currentTarget.id)">
-              <img draggable="false" v-if='cell > 0' :key="cell" class="flip-tile" :src="getImage(cell)" :alt="cell === 1 ? '●' : '○'">
-              <span v-else-if='cell < 0' class="dot d-inline-block rounded-circle mt-1 jelly-dot"/>
+            <td v-for="(cell, j) in row" class="cell" :id="i + '' + j" @click="setCell($event.currentTarget.id)">
+              <img draggable="false" v-if='cell > 0' :key="cell" class="flip-tile d-block ma-auto" :src="getImage(cell)" :alt="cell === 1 ? '●' : '○'">
+              <span v-else-if='cell < 0' class="dot d-block rounded-circle jelly-dot ma-auto"/>
             </td>
           </tr>
         </table>
@@ -62,9 +62,9 @@ export default {
   components: {IllegalMoveSnackbar, TheHeader, GameOverModal},
   data() {
     return {
-      background: require("../assets/back.jpg"),
-      image1: require("../assets/1.png"),
-      image2: require("../assets/2.png"),
+      background: "img/back.jpg",
+      image1: "img/1.png",
+      image2: "img/2.png",
       infoVisible: false
     };
   },
@@ -129,6 +129,12 @@ export default {
   height: 48px;
   transition: all 0.2s ease-in;
   border: 1px solid rgba(20, 20, 20, 0.8);
+}
+
+.game-table .cell img {
+  height: 44px;
+  width: 44px;
+  transition: all 0.1s ease-in;
 }
 
 .game-table .cell:hover {

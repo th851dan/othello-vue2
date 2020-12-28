@@ -3,7 +3,7 @@
     <navbar class="animate__animated animate__slideInDown animate__faster"/>
     <sidebar/>
     <v-main app class="pl-0">
-      <v-container fluid>
+      <v-container fluid class="pa-0">
         <transition :enter-active-class=transitionEnter :leave-active-class=transitionExit mode="out-in">
           <router-view/>
         </transition>

@@ -14,3 +14,12 @@ export default {
   props: ['numBlack', 'numWhite', 'source1', 'source2'],
 };
 </script>
+
+<style scoped>
+
+img {
+  height: 44px;
+  width: 44px;
+}
+
+</style>

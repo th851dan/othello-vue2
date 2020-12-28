@@ -10,7 +10,7 @@
     </v-btn>
     <transition name="slide">
       <div v-show="navVisible" class="nav d-md-flex">
-        <router-link v-for="link in links" class="px-2" :key="link.route" :to="link.route">
+        <router-link v-for="link in links" class="pa-2" :key="link.route" :to="link.route">
           {{link.text}}
         </router-link>
         <a class="px-2" href="https://github.com/th851dan/webtech-othello" target="_blank" rel="noreferrer" aria-label="github">
@@ -92,7 +92,7 @@ a, .nav a {
 }
 
 .slide-enter-active, .slide-leave-active {
-  transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  transition: all .2s cubic-bezier(1.0, 0.5, 0.8, 1.0);
 }
 .slide-enter, .slide-leave-to {
   transform: translateX(100%);

@@ -34,7 +34,7 @@
 export default {
   data() {
     return {
-      screenshot: require('../assets/screenshot.png')
+      screenshot: 'img/screenshot.png'
     }
   },
   methods: {

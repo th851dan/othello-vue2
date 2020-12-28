@@ -8,7 +8,7 @@
           <img class="jump-class" v-if="numBlack > numWhite" :src="source1" alt="●" />
           <img class="jump-class" v-else-if="numBlack < numWhite" :src="source2" alt="○" />
         </v-row>
-        <v-row justify="center">Start new game?</v-row>
+        <v-row justify="center" class="mt-2">Start new game?</v-row>
       </v-card-text>
       <v-divider/>
       <v-card-actions>
@@ -76,5 +76,8 @@ export default {
 .jump-class {
   animation: jump 1.2s infinite;
   animation-delay: 0.2s;
+  height: 50px;
+  width: 50px;
 }
+
 </style>

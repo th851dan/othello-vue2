@@ -9,7 +9,7 @@
 module.exports = {
     pwa: {
         name: 'Othello Vue',
-        themeColor: '#323232',
+        themeColor: '#454545',
         msTileColor: '#5f9ea0',
         appleMobileWebAppCapable: 'yes',
         appleMobileWebAppStatusBarStyle: 'black',
