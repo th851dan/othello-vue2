@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer floating app width="200px" mobile-breakpoint="768" hide-overlay v-model="sidebarVisible">
+  <v-navigation-drawer floating app width="200px" mobile-breakpoint="768" :disable-resize-watcher="$route.path !== '/othello'" hide-overlay v-model="sidebarVisible">
     <new-game-modal/>
     <v-btn text block v-for="element in ['Undo', 'Redo', 'Hint']" @click="request(element.toLowerCase())" :key="element">
       {{ element }}

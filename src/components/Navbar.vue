@@ -9,8 +9,8 @@
       <v-icon dark class="chevron" :class="{'rotate-chevron': navVisible}">mdi-chevron-left</v-icon>
     </v-btn>
     <transition name="slide">
-      <div v-show="navVisible" class="nav d-md-flex">
-        <router-link v-for="link in links" class="pa-2" :key="link.route" :to="link.route">
+      <div v-show="navVisible" class="nav d-md-flex align-center">
+        <router-link v-for="link in links" class="px-2" :key="link.route" :to="link.route">
           {{link.text}}
         </router-link>
         <a class="px-2" href="https://github.com/th851dan/webtech-othello" target="_blank" rel="noreferrer" aria-label="github">
@@ -54,7 +54,7 @@ export default {
 }
 
 .brand {
-  background: linear-gradient(180deg, rgba(117,198,200,1) 0%, rgba(86,148,150,1) 100%);
+  background: linear-gradient(180deg, rgb(117, 198, 200) 0%, rgb(86, 148, 150) 100%);
   text-decoration: none;
   color: #ffffff;
   font-size: 1.25rem;
