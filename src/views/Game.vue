@@ -115,11 +115,13 @@ export default {
 .game-table .column-header {
   height: 28px;
   background: #aaaaaa;
+  color:black;
   cursor: default;
 }
 
 .game-table .row-header {
   background: #aaaaaa;
+  color: black;
   width: 28px;
   cursor: default;
 }
@@ -157,6 +159,7 @@ export default {
 }
 
 .info-panel div {
+  color: black;
   cursor: default;
 }
 
@@ -205,6 +208,12 @@ export default {
   .game-table .cell .dot {
     height: 20px;
     width: 20px;
+  }
+}
+
+@media only screen and (hover: none) {
+  .game-table .cell:hover {
+    background: none;
   }
 }
 

@@ -13,8 +13,10 @@ export default {
 
     webSocket.onerror = event => console.error(event)
     webSocket.onclose = () => {
-      commit('setIsDisconnected', true);
-      setTimeout(() => dispatch('connectWebsocket'), 2000);
+      setTimeout(() => {
+        commit('setIsDisconnected', true);
+        dispatch('connectWebsocket');
+      }, 2000);
     }
     commit('connectToSocket', webSocket)
   },

@@ -5,12 +5,12 @@
       <v-icon dark>mdi-record-circle-outline</v-icon>thello
     </router-link>
     <v-spacer/>
-    <v-btn dark text class="toggler d-md-none" @click.stop="navVisible = !navVisible" aria-label="toggle navigation">
+    <v-btn dark icon small class="d-md-none" @click.stop="navVisible = !navVisible" aria-label="toggle navigation">
       <v-icon dark class="chevron" :class="{'rotate-chevron': navVisible}">mdi-chevron-left</v-icon>
     </v-btn>
     <transition name="slide">
       <div v-show="navVisible" class="nav d-md-flex align-center">
-        <router-link v-for="link in links" class="px-2" :key="link.route" :to="link.route">
+        <router-link v-for="link in links" class="px-sm-1 px-md-2" :key="link.route" :to="link.route">
           {{link.text}}
         </router-link>
         <a class="px-2" href="https://github.com/th851dan/webtech-othello" target="_blank" rel="noreferrer" aria-label="github">
@@ -18,6 +18,16 @@
         </a>
       </div>
     </transition>
+    <v-menu offset-y :close-on-content-click="false">
+      <template v-slot:activator="{ on, attrs }">
+        <v-icon text dark v-bind="attrs" v-on="on" aria-label="dark mode menu">mdi-dots-vertical</v-icon>
+      </template>
+      <v-list>
+        <v-list-item>
+          <v-switch class="my-0 py-0" v-model="darkMode" label="Toggle dark mode" hide-details/>
+        </v-list-item>
+      </v-list>
+    </v-menu>
   </v-app-bar>
 </template>
 
@@ -43,8 +53,17 @@ export default {
       set(value) {
         this.$store.commit('changeSidebarVisibility', value);
       }
+    },
+    darkMode: {
+      get() {
+        return this.$vuetify.theme.dark
+      },
+      set() {
+        this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
+        localStorage.setItem("dark_theme", this.$vuetify.theme.dark.toString())
+      }
     }
-  }
+  },
 }
 </script>
 
@@ -82,13 +101,8 @@ a, .nav a {
 }
 
 .rotate-chevron {
-  transform: rotate(-180deg);
-}
-
-.toggler, .toggler:hover {
   transition: all .3s cubic-bezier(.25, .8, .5, 1);
-  min-width: 38px !important;
-  width: 38px;
+  transform: rotate(-180deg);
 }
 
 .slide-enter-active, .slide-leave-active {

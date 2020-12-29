@@ -2,7 +2,7 @@
     <v-snackbar color="error" text bottom v-model="snackBar" :timeout="3000">
       Move is not legal. Please try again.
       <template v-slot:action="{ attrs }">
-        <v-btn text color="blue-grey darken-4" v-bind="attrs" @click="snackBar = !snackBar" aria-label="close warning" aria-hidden="true">
+        <v-btn icon v-bind="attrs" @click="snackBar = !snackBar" aria-label="close warning" aria-hidden="true">
           <v-icon small>mdi-close</v-icon>
         </v-btn>
       </template>

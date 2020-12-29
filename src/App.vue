@@ -33,6 +33,11 @@ export default {
   components: {Navbar, Sidebar},
   mounted() {
     this.$store.dispatch("connectWebsocket");
+    const theme = localStorage.getItem("dark_theme");
+    if (theme) {
+      this.$vuetify.theme.dark = theme === "true";
+    }
+    localStorage.setItem("dark_theme", this.$vuetify.theme.dark.toString());
   },
   watch: {
     '$route'(to, from) {

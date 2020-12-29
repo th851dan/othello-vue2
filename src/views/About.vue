@@ -1,7 +1,7 @@
 <template>
   <v-container fluid>
     <v-card elevation="12" rounded="lg" class="col-md-10 col-xl-8 my-md-10 text-justify mx-md-auto pa-0">
-      <v-carousel light height="100%" show-arrows-on-hover hide-delimiter-background>
+      <v-carousel :light="!$vuetify.theme.dark" height="100%" show-arrows-on-hover hide-delimiter-background>
         <v-carousel-item>
           <v-card-title class="mx-md-15">About Othello</v-card-title>
           <img class="othello d-block ma-auto pa-1 mb-5" src="img/othello.jpg" alt="othello"/>

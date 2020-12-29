@@ -63,25 +63,40 @@ export default {
 nav {
   z-index: 1;
   backdrop-filter: blur(5px);
-  background-color: rgba(248, 249, 250, 0.72) !important;
   padding-top: 100px !important;
   box-shadow: 0 0 5px -1px rgba(0, 0, 0, 0.38);
 }
 
+.theme--light nav  {
+  background-color: rgba(248, 249, 250, 0.72) !important;
+}
+
+.theme--dark nav  {
+  background-color: rgba(30, 30, 30, 0.72) !important;
+}
+
 /deep/ button {
-  transition: all 0.3s;
   padding-left: 16px;
   text-transform: uppercase;
   font-weight: 500;
-  min-height: 42px;
   height: 42px  !important;
   justify-content: start;
   font-size: 17px !important;
-  color: #818181 !important;
 }
 
-/deep/ button.active {
+.theme--light button,
+/deep/ button.theme--light,
+.theme--light .v-expansion-panel-header,
+.theme--light .v-expansion-panel-content {
+  color: #818181;
+}
+
+.theme--light button.active {
   color: #222222 !important;
+}
+
+.theme--dark button.active {
+  color: #5f9ea0 !important;
 }
 
 /deep/ .v-expansion-panel {
@@ -90,9 +105,12 @@ nav {
 }
 
 /deep/ .v-expansion-panel-content__wrap {
+  padding: 0;
+}
+
+/deep/ .theme--light .v-expansion-panel-content__wrap {
   background: rgba(208, 208, 208, 0.4);
   box-shadow: inset 0 2px 2px 0 rgba(30, 30, 30, 0.1);
-  padding: 0;
 }
 
 </style>
