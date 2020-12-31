@@ -45,4 +45,7 @@ export default {
   setIsDisconnected(state, disconnected) {
     state.isDisconnected = disconnected;
   },
+  setDeferredPrompt(state, deferredPrompt) {
+    state.deferredPrompt = deferredPrompt;
+  },
 }

@@ -40,5 +40,8 @@ export default {
     },
     getIsDisconnected(state) {
         return state.isDisconnected;
+    },
+    getDeferredPrompt(state) {
+        return state.deferredPrompt;
     }
 }

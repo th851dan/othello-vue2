@@ -10,5 +10,6 @@ export default {
   isMoveIllegal: false,
   isDisconnected: false,
   currentPlayer: {},
-  mode: '1'
+  mode: '1',
+  deferredPrompt: null,
 }

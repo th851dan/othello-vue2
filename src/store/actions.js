@@ -102,5 +102,8 @@ export default {
   },
   setIsDisconnected({ commit }, mode) {
     commit('setIsDisconnected', mode)
+  },
+  setDeferredPrompt({ commit }, deferredPrompt) {
+    commit('setDeferredPrompt', deferredPrompt);
   }
 }
