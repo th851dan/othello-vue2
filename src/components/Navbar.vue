@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar app clipped-left class="app-bar" dark dense height="38px">
+  <v-app-bar app clipped-left class="app-bar" dark dense height="38px" v-resize="updateMarker">
     <v-app-bar-nav-icon class="d-md-none" @click="sidebarVisible = !sidebarVisible" aria-label="toggle sidebar"/>
     <router-link to="/othello" class="brand d-md-flex align-center py-1 pl-3">
       <v-icon dark>mdi-record-circle-outline</v-icon>thello
@@ -9,7 +9,8 @@
       <v-icon dark class="chevron" :class="{'rotate-chevron': navVisible}">mdi-chevron-left</v-icon>
     </v-btn>
     <transition name="slide">
-      <div v-show="navVisible" class="nav d-md-flex align-center">
+      <div v-show="navVisible" class="nav position-relative d-md-flex align-center">
+        <div id="marker"/>
         <router-link v-for="link in links" class="px-sm-1 px-md-2" :key="link.route" :to="link.route">
           {{link.text}}
         </router-link>
@@ -64,6 +65,27 @@ export default {
       }
     }
   },
+  methods: {
+    updateMarker() {
+      this.$nextTick(() => {
+        const activeRoute = document.getElementsByClassName('px-md-2 router-link-exact-active')[0];
+        const marker = document.getElementById('marker');
+        marker.style.left = activeRoute.offsetLeft + "px";
+        marker.style.width = activeRoute.offsetWidth + "px";
+      });
+    }
+  },
+  mounted() {
+    this.updateMarker();
+  },
+  watch: {
+    '$route'(to, _) {
+      this.updateMarker();
+    },
+    navVisible() {
+      this.updateMarker();
+    }
+  },
 }
 </script>
 
@@ -81,23 +103,27 @@ export default {
 }
 
 a, .nav a {
+  position: relative;
   text-decoration: none;
   color: rgba(255, 255, 255, 0.5);
-  transition: all 0.2s ease-in;
+  transition: color 0.2s ease-in;
   padding: 6px;
 }
 
 .nav a:hover {
-  color: rgba(255, 255, 255, 0.75);
-}
-
-.nav a:active {
-  background-color: #444444;
+  color: #ddd;
 }
 
 .nav a.router-link-exact-active {
   color: white;
-  background-color: rgba(200, 92, 92, 0.2);
+}
+
+#marker {
+  transition: 0.4s;
+  background: cadetblue;
+  position: absolute;
+  bottom: -0.5px;
+  height: 3px;
 }
 
 .rotate-chevron {
