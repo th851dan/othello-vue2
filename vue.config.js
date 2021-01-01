@@ -16,6 +16,8 @@ module.exports = {
         workboxPluginMode: 'GenerateSW',
         workboxOptions: {
             navigateFallback: 'index.html',
+            skipWaiting: true,
+            clientsClaim: true,
         },
         manifestOptions: {
             name: 'Othello Vue',
