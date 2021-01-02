@@ -7,7 +7,11 @@ Vue.use(Vuetify)
 
 const opts = {
     icons: {
-        iconfont: 'mdi'
+        iconfont: 'mdi',
+        values: {
+            radioOn: "mdi-check",
+            radioOff: "",
+        }
     },
     theme: {
         dark: false,

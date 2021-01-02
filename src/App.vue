@@ -28,7 +28,11 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["getIsDisconnected"])
+    ...mapGetters(["getIsDisconnected"]),
+    prefersDarkMode() {
+      return window.matchMedia &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches
+    }
   },
   components: {Navbar, Sidebar},
   mounted() {
@@ -37,7 +41,17 @@ export default {
     if (theme) {
       this.$vuetify.theme.dark = theme === "true";
     }
-    localStorage.setItem("dark_theme", this.$vuetify.theme.dark.toString());
+    else if (this.prefersDarkMode) {
+      this.$vuetify.theme.dark = true;
+    }
+    window.matchMedia("(prefers-color-scheme: dark)")
+        .addEventListener('change',
+        e => {
+          if (!localStorage.getItem('dark_theme')) {
+            this.$vuetify.theme.dark = e.matches
+          }
+        }
+    );
   },
   watch: {
     '$route'(to, from) {

@@ -1,6 +1,8 @@
+let webSocket;
+
 export default {
   connectWebsocket({ dispatch, commit }) {
-    const webSocket = new WebSocket('ws://localhost:9000/websocket')
+    webSocket = new WebSocket('ws://localhost:9000/websocket')
     console.info('Connecting to WebSocket...')
 
     webSocket.onopen = () => {
@@ -14,8 +16,12 @@ export default {
     webSocket.onerror = event => console.error(event)
     webSocket.onclose = () => {
       setTimeout(() => {
-        commit('setIsDisconnected', true);
         dispatch('connectWebsocket');
+        setTimeout( () => {
+          if (webSocket.readyState === WebSocket.CLOSED) {
+            commit('setIsDisconnected', true);
+          }
+        }, 500);
       }, 2000);
     }
     commit('connectToSocket', webSocket)
