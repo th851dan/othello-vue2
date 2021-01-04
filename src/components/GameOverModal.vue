@@ -29,7 +29,16 @@ import { mapGetters } from "vuex";
 
 export default {
   name: "GameOverModal",
-  props: ["source1", "source2"],
+  props: {
+    source1: {
+      type: String,
+      required: true
+    },
+    source2: {
+      type: String,
+      required: true
+    }
+  },
   computed: {
     ...mapGetters({
       isVisible: "getGameOverModalVisibility",

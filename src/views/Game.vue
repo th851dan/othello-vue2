@@ -8,7 +8,9 @@
           <tr v-for="(row, i) in board">
             <th class="row-header text-center">{{ i + 1 }}</th>
             <td v-for="(cell, j) in row" class="cell" :id="i + '' + j" @click="setCell($event.currentTarget.id)">
-              <img draggable="false" v-if='cell > 0' :key="cell" class="flip-tile d-block ma-auto" :src="getImage(cell)" :alt="cell === 1 ? '●' : '○'">
+              <transition v-if='cell > 0' name="flip" mode="out-in" appear appear-active-class="fall-in" >
+                <img draggable="false" :key="cell" class="d-block ma-auto" :src="getImage(cell)" :alt="cell === 1 ? '●' : '○'">
+              </transition>
               <span v-else-if='cell < 0' class="dot d-block rounded-circle jelly-dot ma-auto"/>
             </td>
           </tr>
@@ -32,7 +34,7 @@
           <div><span>Difficulty:</span><span class="float-right">{{ difficulty }}</span></div>
           <div><span>Current turn:</span><span class="float-right">{{ currentPlayerName }}</span></div>
           <div><span>Mode:</span><span class="float-right">{{ gameMode }}</span></div>
-      </div>
+        </div>
       </transition>
       <v-tooltip bottom open-delay="750">
         <template v-slot:activator="{ on, attrs }">
@@ -88,22 +90,47 @@ export default {
     getImage(forValue) {
       return forValue === 1 ? this.image1 : this.image2;
     },
-    ...mapActions(['request', 'setCell'])
+    ...mapActions(['request', 'setCell', "changeSidebarVisibility"])
   },
   mounted() {
     const show = window.innerWidth && window.innerWidth > 767;
-    this.$store.dispatch("changeSidebarVisibility", show);
+    this.changeSidebarVisibility(show);
     document.title = "Othello"
   },
   beforeDestroy() {
-    this.$store.dispatch("changeSidebarVisibility", false);
+    this.changeSidebarVisibility(false);
   }
-};
+}
 </script>
 
 <style scoped>
 .d-table .v-sheet {
   border: 6px solid saddlebrown;
+}
+
+.flip-enter-active, .flip-leave-active {
+  transition: all .1s linear;
+}
+
+.flip-enter, .flip-leave-to {
+  transform: rotateY(82deg);
+}
+
+.fall-in {
+  animation: fall .2s ease-in;
+}
+
+@keyframes fall {
+  from {
+    transform: scale(1.4);
+    opacity: 0.3;
+    filter: drop-shadow(10px 10px 5px rgba(0,0,0,0.5));
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+    filter: drop-shadow(3px 3px 2px rgba(0,0,0,0.3));
+  }
 }
 
 .game-table {
@@ -136,7 +163,6 @@ export default {
 .game-table .cell img {
   height: 44px;
   width: 44px;
-  transition: all 0.1s ease-in;
 }
 
 .game-table .cell:hover {
@@ -217,12 +243,6 @@ export default {
   }
 }
 
-@keyframes flip {
-  to {
-    transform: rotateY(180deg);
-  }
-}
-
 @keyframes jelly {
   0% {
     transform: scale(1);
@@ -239,11 +259,6 @@ export default {
   100% {
     transform: scale(1);
   }
-}
-
-.flip-tile {
-  position: relative;
-  animation: flip 0.5s forwards cubic-bezier(0.04, 0.4, 0.8, 1.40);
 }
 
 .jelly-dot {

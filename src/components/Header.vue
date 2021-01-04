@@ -11,7 +11,24 @@
 <script>
 export default {
   name: "TheHeader",
-  props: ['numBlack', 'numWhite', 'source1', 'source2'],
+  props: {
+    numBlack: {
+      type: Number,
+      required: true,
+    },
+    numWhite: {
+      type: Number,
+      required: true
+    },
+    source1: {
+      type: String,
+      required: true
+    },
+    source2: {
+      type: String,
+      required: true
+    }
+  }
 };
 </script>
 
