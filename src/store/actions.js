@@ -111,5 +111,11 @@ export default {
   },
   setDeferredPrompt({ commit }, deferredPrompt) {
     commit('setDeferredPrompt', deferredPrompt);
-  }
+  },
+  setPlayer1Name({commit}, name){
+    commit('setPlayerName', {player: 1, name: name})
+  },
+  setPlayer2Name({commit}, name){
+    commit('setPlayerName', {player: 2, name: name})
+  },
 }

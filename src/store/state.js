@@ -12,4 +12,6 @@ export default {
   currentPlayer: {},
   mode: '1',
   deferredPrompt: null,
+  player1: 'player1',
+  player2: 'player2'
 }

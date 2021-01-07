@@ -48,4 +48,7 @@ export default {
   setDeferredPrompt(state, deferredPrompt) {
     state.deferredPrompt = deferredPrompt;
   },
+  setPlayerName(state, {player, name}){
+    player === 1? state.player1 = name : state.player2 = name;
+  }
 }
