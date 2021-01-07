@@ -38,7 +38,7 @@
         <v-col md="4" offset-md="4">
           <v-row class="float-right mx-4">
             <v-switch class="mx-4" v-model="darkMode" label="Dark Theme"></v-switch>
-            <v-btn fab dark color="success" @click="submitOption"> Start </v-btn>
+            <v-btn fab dark color="success" @click="submitOption"> OK </v-btn>
           </v-row>
         </v-col>
       </v-row>
@@ -168,6 +168,7 @@ export default {
         if (this.mode === '2')
           this.setPlayer2Name(this.player2)
       }
+      this.drawer = false;
     }
   },
 };
