@@ -1,33 +1,22 @@
 <template>
   <v-container fluid style="height: calc(100vh - 38px)">
     <v-container class="landing-page d-flex justify-center align-center">
-      <v-row>
-        <v-col cols="12">
-          <router-link
-            id="game-start"
-            to="othello"
-            @click.native="request('new')"
-          >
-            <v-row justify="center" align="center">
-              <v-icon id="play-button">mdi-play-circle-outline</v-icon>
-              <span>NEW GAME</span>
-            </v-row>
+      <div>
+        <v-row>
+          <router-link id="game-start" to="othello" @click.native="request('new')">
+            <v-icon id="play-button">mdi-play-circle-outline</v-icon>
+            <span>NEW GAME</span>
           </router-link>
-        </v-col>
-        <v-col cols="12" align="center">
-          <v-btn fab dark large color="success" @click.stop="drawer = !drawer">
-            <v-icon>mdi-cog</v-icon>
-          </v-btn>
-        </v-col>
-      </v-row>
+        </v-row>
+        <v-row>
+          <div id="options-button" @click.stop="drawer = !drawer">
+            <v-icon class="mx-3" color="grey darken-2">mdi-cogs</v-icon>
+            <span>OPTIONS</span>
+          </div>
+        </v-row>
+      </div>
     </v-container>
-    <v-navigation-drawer
-      v-model="drawer"
-      absolute
-      temporary
-      bottom
-      mobile-breakpoint="20000"
-    >
+    <v-navigation-drawer v-model="drawer" fixed temporary bottom mobile-breakpoint="20000">
       <v-row justify="space-between">
         <v-col md="4">
           <v-row class="mx-4">
@@ -42,61 +31,40 @@
           </v-row>
         </v-col>
       </v-row>
-      <v-divider class="ma-0"></v-divider>
-
+      <v-divider/>
       <v-radio-group v-model="mode" row class="my-0 mx-2">
         <template v-slot:label>
           <div><strong>Mode:</strong></div>
         </template>
-        <v-radio
-          v-for="element in [
-            { key: '2', text: 'Player vs Player' },
-            { key: '1', text: 'Player vs Bot' },
-            { key: '0', text: 'Bot vs Bot' },
-          ]"
-          :key="element.key"
-          :label="element.text"
-          :value="element.key"
-        >
-        </v-radio>
+        <v-radio value="2" label="Player vs Player" :ripple="false"/>
+        <v-radio value="1" label="Player vs Bot" :ripple="false"/>
+        <v-radio value="0" label="Bot vs Bot" :ripple="false"/>
       </v-radio-group>
       <v-radio-group v-model="difficulty" row class="my-0 mx-2">
         <template v-slot:label>
           <div><strong>Difficulty:</strong></div>
         </template>
-        <v-radio
-          v-for="element in [
-            { key: 'e', text: 'Easy' },
-            { key: 'm', text: 'Normal' },
-            {key: 'd' ,text:'Hard'}
-          ]"
-          :key="element.key"
-          :label="element.text"
-          :value="element.key"
-        >
-        </v-radio>
+        <v-radio value="e" label="Easy" :ripple="false"/>
+        <v-radio value="m" label="Normal" :ripple="false"/>
+        <v-radio value="d" label="Hard" :ripple="false"/>
       </v-radio-group>
       <v-row class="mx-2">
         <v-col>
           <v-text-field
             v-show="mode !== '0'"
             v-model="player1"
-            :rules="nameRules"
             :label="mode === '1' ? 'Name player' : 'Name player 1'"
             required
           ></v-text-field>
         </v-col>
-
         <v-col>
           <v-text-field
             v-show="mode === '2'"
             v-model="player2"
-            :rules="nameRules"
             label="Name player 2"
             required
           ></v-text-field>
         </v-col>
-
       </v-row>
     </v-navigation-drawer>
     <v-btn
@@ -122,15 +90,15 @@ export default {
   data() {
     return {
       drawer: false,
-      mode: "1",
       player1: "",
       player2: "",
-      difficulty: "e"
     };
   },
   computed: {
     ...mapGetters({
       deferredPrompt: "getDeferredPrompt",
+      getDifficulty: "getDifficulty",
+      getMode: "getMode",
     }),
     darkMode: {
       get() {
@@ -141,6 +109,24 @@ export default {
         localStorage.setItem("dark_theme", this.$vuetify.theme.dark.toString())
       }
     },
+    difficulty: {
+      get() {
+        if (this.getDifficulty === "Easy") return "e"
+        else if (this.getDifficulty === "Normal") return "m"
+        else if (this.getDifficulty === "Hard") return "d"
+      },
+      set(value) {
+        this.changeDifficulty(value);
+      }
+    },
+    mode: {
+      get() {
+        return this.getMode;
+      },
+      set(value) {
+        this.setMode(value);
+      }
+    }
   },
   created() {
     window.addEventListener("beforeinstallprompt", (e) => {
@@ -153,7 +139,7 @@ export default {
     document.title = "Welcome to Othello";
   },
   methods: {
-    ...mapActions(["request", "setDeferredPrompt", "changeGameMode", "setPlayer1Name", "setPlayer2Name"]),
+    ...mapActions(["request", "setDeferredPrompt", "changeGameMode", "setPlayer1Name", "setPlayer2Name", "changeDifficulty", "setMode"]),
     async install() {
       this.deferredPrompt.prompt();
     },
@@ -180,14 +166,15 @@ export default {
   font-size: 250%;
 }
 
-#game-start {
-  text-decoration: none !important;
+#game-start, #options-button {
+  text-decoration: none;
+  cursor: pointer;
   text-shadow: 1px 1px 2px rgba(10, 10, 10, 0.5);
   color: #818181;
   transition: all 0.3s ease;
 }
 
-#game-start:hover {
+#game-start:hover, #options-button:hover {
   transform: scale(1.1);
 }
 
