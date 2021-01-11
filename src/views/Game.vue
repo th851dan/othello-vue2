@@ -33,7 +33,6 @@
         <div class="ml-2 py-2 px-3 info-panel" v-show="infoVisible">
           <div><span>Difficulty:</span><span class="float-right">{{ difficulty }}</span></div>
           <div><span>Current turn:</span><span class="float-right">{{ currentPlayerName }}</span></div>
-          <div v-show="!isCurrentPlayerBot"><span>Player's name:</span><span class="float-right">{{ currentPlayerName.includes('Black') ? player1 : player2 }}</span></div>
           <div><span>Mode:</span><span class="float-right">{{ gameMode }}</span></div>
         </div>
       </transition>
@@ -78,11 +77,8 @@ export default {
       board: "getBoard",
       size: "getSize",
       currentPlayerName: "getDisplayedPlayerName",
-      player1: "getPlayer1Name",
-      player2: "getPlayer2Name",
       gameMode: "getDisplayedGameMode",
-      difficulty: "getDifficulty",
-      isCurrentPlayerBot: "getIsCurrentPlayerBot"
+      difficulty: "getDifficulty"
     }),
   },
   methods: {

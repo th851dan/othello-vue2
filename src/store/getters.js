@@ -43,14 +43,5 @@ export default {
     },
     getDeferredPrompt(state) {
         return state.deferredPrompt;
-    },
-    getPlayer1Name(state){
-        return state.player1;
-    },
-    getPlayer2Name(state){
-        return state.player2;
-    },
-    getIsCurrentPlayerBot(state){
-        return state.currentPlayer.isBot;
-    },
+    }
 }

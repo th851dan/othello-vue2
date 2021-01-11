@@ -139,20 +139,19 @@ export default {
     document.title = "Welcome to Othello";
   },
   methods: {
-    ...mapActions(["request", "setDeferredPrompt", "changeGameMode", "setPlayer1Name", "setPlayer2Name", "changeDifficulty", "setMode"]),
+    ...mapActions(["request", "setDeferredPrompt", "changeGameMode", "setPlayerName", "changeDifficulty", "setMode"]),
     async install() {
       this.deferredPrompt.prompt();
     },
     async dismiss() {
       this.setDeferredPrompt(null);
     },
-    submitOption(){
+    submitOption() {
       this.changeGameMode(this.mode);
-      if (this.mode !== '0')
-      {
-        this.setPlayer1Name(this.player1)
+      if (this.mode !== '0') {
+        this.setPlayerName({index: 0, name: this.player1})
         if (this.mode === '2')
-          this.setPlayer2Name(this.player2)
+          this.setPlayerName({index: 1, name: this.player2})
       }
       this.drawer = false;
     }
