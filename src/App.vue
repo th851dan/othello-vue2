@@ -38,12 +38,7 @@ export default {
   mounted() {
     this.$store.dispatch("connectWebsocket");
     const theme = localStorage.getItem("dark_theme");
-    if (theme) {
-      this.$vuetify.theme.dark = theme === "true";
-    }
-    else if (this.prefersDarkMode) {
-      this.$vuetify.theme.dark = true;
-    }
+    this.$vuetify.theme.dark = theme ? theme === "true" : this.prefersDarkMode;
     window.matchMedia("(prefers-color-scheme: dark)")
         .addEventListener('change',
         e => {

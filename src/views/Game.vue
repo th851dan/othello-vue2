@@ -8,10 +8,10 @@
           <tr v-for="(row, i) in board">
             <th class="row-header text-center">{{ i + 1 }}</th>
             <td v-for="(cell, j) in row" class="cell" :id="i + '' + j" @click="setCell($event.currentTarget.id)">
-              <transition v-if='cell > 0' name="flip" mode="out-in" appear appear-active-class="fall-in" >
+              <transition v-if='cell > 0' name="flip" mode="out-in" appear appear-active-class="fall-in">
                 <img draggable="false" :key="cell" class="d-block ma-auto" :src="getImage(cell)" :alt="cell === 1 ? '●' : '○'">
               </transition>
-              <span v-else-if='cell < 0' class="dot d-block rounded-circle jelly-dot ma-auto"/>
+              <span v-else-if='cell < 0' class="dot d-block rounded-circle ma-auto"/>
             </td>
           </tr>
         </table>
@@ -29,13 +29,13 @@
           <v-icon>{{ 'mdi-' + element.icon }}</v-icon>
         </v-btn>
       </v-item-group>
-      <transition name="roll">
+      <v-expand-transition>
         <div class="ml-2 py-2 px-3 info-panel" v-show="infoVisible">
           <div><span>Difficulty:</span><span class="float-right">{{ difficulty }}</span></div>
           <div><span>Current turn:</span><span class="float-right">{{ currentPlayerName }}</span></div>
           <div><span>Mode:</span><span class="float-right">{{ gameMode }}</span></div>
         </div>
-      </transition>
+      </v-expand-transition>
       <v-tooltip bottom open-delay="750">
         <template v-slot:activator="{ on, attrs }">
           <v-btn text @click="infoVisible = !infoVisible" id="info-btn" class="ml-2" v-bind="attrs" v-on="on" aria-label="show info">
@@ -117,12 +117,12 @@ export default {
 }
 
 .fall-in {
-  animation: fall .2s ease-in;
+  animation: fall .25s cubic-bezier(0.04, 0.4, 0.8, 1.40);
 }
 
 @keyframes fall {
   from {
-    transform: scale(1.4);
+    transform: scale(1.6);
     opacity: 0.3;
     filter: drop-shadow(10px 10px 5px rgba(0,0,0,0.5));
   }
@@ -170,6 +170,7 @@ export default {
 }
 
 .game-table .cell .dot {
+  animation: jelly ease 0.5s;
   height: 25px;
   width: 25px;
   background-color: rgba(12, 12, 12, 0.5);
@@ -187,17 +188,6 @@ export default {
 .info-panel div {
   color: black;
   cursor: default;
-}
-
-.roll-enter-active, .roll-leave-active {
-  transition: all .3s cubic-bezier(.25, .8, .5, 1);
-  overflow: hidden;
-  /* max-height required for correct animation */
-  max-height: 100px;
-}
-
-.roll-enter, .roll-leave-to {
-  max-height: 0;
 }
 
 #float-right .v-btn, #info-btn {
@@ -261,7 +251,4 @@ export default {
   }
 }
 
-.jelly-dot {
-  animation: jelly ease 0.5s;
-}
 </style>
