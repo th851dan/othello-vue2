@@ -2,11 +2,25 @@
   <v-container fluid style="width: 50vw">
     <v-container class="justify-center align-center">
       <v-row justify="space-between">
-        <v-col> <h2> Sign in </h2> </v-col> 
-        <v-col> or 
+        <v-col> <h2>Sign in</h2> </v-col>
+        <v-col>
+          or
           <router-link to="/register" class="">create an account</router-link>
         </v-col>
       </v-row>
+      <v-row>
+        <v-btn tile color="error" @click="loginWithGoogle">
+          <v-icon left> mdi-google </v-icon>
+          Sign in with Google
+        </v-btn>
+      </v-row>
+      <v-row>
+        <v-btn tile color="success" @click="loginWithGithub">
+          <v-icon left> mdi-github </v-icon>
+          Sign in with Github
+        </v-btn>
+      </v-row>
+      <v-divider />
       <v-form v-model="isFormValid">
         <v-row>
           <v-text-field
@@ -36,7 +50,9 @@
         </v-alert>
       </v-row>
       <v-row justify="space-between">
-        <v-col> <router-link to="/forgot" class="">Forgot your password?</router-link>  </v-col>
+        <v-col>
+          <router-link to="/forgot" class="">Forgot your password?</router-link>
+        </v-col>
         <v-col>
           <v-btn color="primary" @click="login" :disabled="!isFormValid">
             Login
@@ -80,10 +96,45 @@ export default {
           this.error = err;
         });
     },
+    loginWithGoogle() {
+      let provider = new firebase.auth.GoogleAuthProvider();
+      this.loginWith(provider);
+    },
+    loginWithGithub() {
+      let provider = new firebase.auth.GithubAuthProvider();
+      this.loginWith(provider);
+    },
+    loginWith(provider) {
+      firebase
+  .auth()
+  .signInWithPopup(provider)
+  .then((result) => {
+    /** @type {firebase.auth.OAuthCredential} */
+    var credential = result.credential;
+
+    // This gives you a GitHub Access Token. You can use it to access the GitHub API.
+    var token = credential.accessToken;
+
+    // The signed-in user info.
+    var user = result.user;
+    // ...
+  }).catch((error) => {
+    // Handle Errors here.
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    // The email of the user's account used.
+    var email = error.email;
+    // The firebase.auth.AuthCredential type that was used.
+    var credential = error.credential;
+    // ...
+  });
+    },
   },
   mounted: () => (document.title = "Othello - Sign in"),
 };
 </script>
 <style scoped>
-
+.login-provider {
+  cursor: pointer;
+}
 </style>
