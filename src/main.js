@@ -30,6 +30,7 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 firebase.auth().onAuthStateChanged(user => {
   store.dispatch("fetchUser", user);
+  user ? router.replace({ name: "Home" }) : router.replace({ name: "Register" });
 });
 
 new Vue({
