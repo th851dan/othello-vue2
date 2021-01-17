@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import Game from '../views/Game.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
+import ForgotPassword from '../views/ForgotPassword.vue'
 import NotFound from '../views/NotFound.vue'
 
 Vue.use(VueRouter)
@@ -28,6 +29,11 @@ const routes = [
     path: '/register',
     name: 'Register',
     component: Register
+  },
+  {
+    path: '/forgot',
+    name: 'Forgot',
+    component: ForgotPassword
   },
   {
     path: '*',

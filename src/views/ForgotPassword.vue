@@ -2,10 +2,7 @@
   <v-container fluid style="width: 50vw">
     <v-container class="justify-center align-center">
       <v-row justify="space-between">
-        <v-col> <h2> Sign in </h2> </v-col> 
-        <v-col> or 
-          <router-link to="/register" class="">create an account</router-link>
-        </v-col>
+        <v-col> <h2> Forgot Password </h2> </v-col> 
       </v-row>
       <v-form v-model="isFormValid">
         <v-row>
@@ -16,32 +13,21 @@
             validate-on-blur
           ></v-text-field>
         </v-row>
-        <v-row>
-          <v-text-field
-            v-model="password"
-            :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-            :rules="[rules.required, rules.min]"
-            :type="show ? 'text' : 'password'"
-            label="Password"
-            hint="At least 8 characters"
-            counter
-            validate-on-blur
-            @click:append="show = !show"
-          ></v-text-field>
-        </v-row>
       </v-form>
       <v-row v-if="error">
         <v-alert dense outlined type="error">
           {{ error }}
         </v-alert>
       </v-row>
+      <v-row v-if="emailSent">
+        <v-alert dense outlined type="success">
+          An email has been sent to "{{email}}". Please check your inbox to reset your password.
+        </v-alert>
+      </v-row>
       <v-row justify="space-between">
-        <v-col> <router-link to="/forgot" class="">Forgot your password?</router-link>  </v-col>
-        <v-col>
-          <v-btn color="primary" @click="login" :disabled="!isFormValid">
-            Login
+          <v-btn color="primary" @click="resetPassword" :disabled="!isFormValid">
+            Reset your password
           </v-btn>
-        </v-col>
       </v-row>
     </v-container>
   </v-container>
@@ -53,35 +39,35 @@ export default {
   data() {
     return {
       email: null,
-      password: null,
       isFormValid: false,
       error: null,
-      show: false,
+      emailSent: false,
       rules: {
         required: (value) => !!value || "Required.",
         email: (value) => {
           const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
           return pattern.test(value) || "Invalid e-mail.";
         },
-        min: (v) => (v && v.length >= 8) || "Min 8 characters",
       },
     };
   },
   computed: {},
   methods: {
-    login() {
+    resetPassword() {
       firebase
         .auth()
-        .signInWithEmailAndPassword(this.email, this.password)
-        .then((data) => {
-          this.$router.replace({ name: "Home" });
+        .sendPasswordResetEmail(this.email)
+        .then(() => {
+          this.emailSent = true;
+          this.error = null;
         })
-        .catch((err) => {
+        .catch(err => {
+          this.emailSent = false;
           this.error = err;
         });
     },
   },
-  mounted: () => (document.title = "Othello - Sign in"),
+  mounted: () => (document.title = "Othello - Forgot password"),
 };
 </script>
 <style scoped>

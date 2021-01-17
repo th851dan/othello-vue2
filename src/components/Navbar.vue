@@ -7,7 +7,7 @@
     <v-spacer/>
     <v-row no-gutters v-if="currentUser.data" justify="space-between" class="mx-2">
       <label>
-        Hello {{currentUser.data.email}}
+        Hello {{ currentUser.data.displayName ? currentUser.data.displayName : currentUser.data.email}}
       </label>
       <v-btn color="primary" @click="logout">Sign out</v-btn>
     </v-row>
@@ -89,6 +89,7 @@ export default {
       const theme = localStorage.getItem("dark_theme");
       return theme ? theme : "default";
     },
+
   },
   methods: {
     updateMarker() {

@@ -19,7 +19,7 @@
         <v-row>
           <router-link class="center-button" to="login">
             <v-icon color="#5b9628">mdi-play-circle-outline</v-icon>
-            <span>LOG IN</span>
+            <span>SIGN IN</span>
           </router-link>
         </v-row>
       </div>
