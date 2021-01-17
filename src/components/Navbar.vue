@@ -9,11 +9,18 @@
       <label>
         Hello {{ currentUser.data.displayName ? currentUser.data.displayName : currentUser.data.email}}
       </label>
+      <router-link  to="/change">
+      <v-btn color="primary">Change your password</v-btn>
+      </router-link>
       <v-btn color="primary" @click="logout">Sign out</v-btn>
+      
     </v-row>
-     <router-link v-else to="/login">
+    <div v-else>
+     <router-link  to="/login">
       <v-btn color="primary">Sign in</v-btn>
     </router-link>
+    
+    </div>
     <v-btn icon small class="d-md-none" @click.stop="navVisible = !navVisible" aria-label="toggle navigation">
       <v-icon :class="{'rotate-chevron': navVisible}">mdi-chevron-left</v-icon>
     </v-btn>
