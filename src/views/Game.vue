@@ -1,4 +1,5 @@
 <template>
+<div v-if="currentUser.data">
   <div v-if="size > 0">
     <div class="d-table ma-auto animate__animated animate__slideInDown animate__faster">
       <the-header :source1="image1" :source2="image2" :num-black="numBlack" :num-white="numWhite"/>
@@ -51,6 +52,12 @@
   <div v-else class="d-flex justify-center text-center align-center" style="min-height: 75vh">
     <v-progress-circular indeterminate size="150" width="5" color="grey"/>
   </div>
+</div>
+<div v-else class="d-flex justify-center text-center align-center" style="min-height: 75vh">
+  <router-link to="login" class="login-button">
+      <h2>Please sign in</h2>
+    </router-link>
+</div>
 </template>
 
 <script>
@@ -78,7 +85,9 @@ export default {
       size: "getSize",
       currentPlayerName: "getDisplayedPlayerName",
       gameMode: "getDisplayedGameMode",
-      difficulty: "getDifficulty"
+      difficulty: "getDifficulty",
+      currentUser: "user"
+
     }),
   },
   methods: {
@@ -199,6 +208,17 @@ export default {
 .rotate-chevron {
   transform: rotate(-180deg);
 }
+
+.login-button {
+  text-decoration: none;
+  text-shadow: 1px 1px 2px rgba(10, 10, 10, 0.5);
+  transition: all 0.3s ease;
+}
+
+.login-button:hover {
+  transform: scale(1.1);
+}
+
 
 @media (max-width: 800px) {
   .game-table .column-header {

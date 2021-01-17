@@ -50,5 +50,11 @@ export default {
   },
   setPlayerName(state, {player, name}){
     player === 1? state.player1 = name : state.player2 = name;
+  },
+  SET_LOGGED_IN(state, value) {
+    state.user.loggedIn = value;
+  },
+  SET_USER(state, data) {
+    state.user.data = data;
   }
 }

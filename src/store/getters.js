@@ -43,5 +43,8 @@ export default {
     },
     getDeferredPrompt(state) {
         return state.deferredPrompt;
+    },
+    user(state) {
+        return state.user;
     }
 }

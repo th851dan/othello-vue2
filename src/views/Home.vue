@@ -1,7 +1,7 @@
 <template>
   <v-container fluid style="height: calc(100vh - 38px)">
     <v-container class="landing-page d-flex justify-center align-center">
-      <div>
+      <div v-if="currentUser.data">
         <v-row>
           <router-link class="center-button" to="othello" @click.native="request('new')">
             <v-icon color="#5b9628">mdi-play-circle-outline</v-icon>
@@ -13,6 +13,14 @@
             <v-icon color="grey darken-2">mdi-cog</v-icon>
             <span>OPTIONS</span>
           </div>
+        </v-row>
+      </div>
+      <div v-else>
+        <v-row>
+          <router-link class="center-button" to="login">
+            <v-icon color="#5b9628">mdi-play-circle-outline</v-icon>
+            <span>LOG IN</span>
+          </router-link>
         </v-row>
       </div>
     </v-container>
@@ -49,6 +57,7 @@ export default {
   computed: {
     ...mapGetters({
       deferredPrompt: "getDeferredPrompt",
+      currentUser: "user"
     }),
   },
   created() {
