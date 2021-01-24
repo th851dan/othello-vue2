@@ -5,22 +5,6 @@
       <v-icon>mdi-record-circle-outline</v-icon>thello
     </router-link>
     <v-spacer/>
-    <v-row no-gutters v-if="currentUser.data" justify="space-between" class="mx-2">
-      <label>
-        Hello {{ currentUser.data.displayName ? currentUser.data.displayName : currentUser.data.email}}
-      </label>
-      <router-link  to="/change">
-      <v-btn color="primary">Change your password</v-btn>
-      </router-link>
-      <v-btn color="primary" @click="logout">Sign out</v-btn>
-      
-    </v-row>
-    <div v-else>
-     <router-link  to="/login">
-      <v-btn color="primary">Sign in</v-btn>
-    </router-link>
-    
-    </div>
     <v-btn icon small class="d-md-none" @click.stop="navVisible = !navVisible" aria-label="toggle navigation">
       <v-icon :class="{'rotate-chevron': navVisible}">mdi-chevron-left</v-icon>
     </v-btn>
@@ -39,17 +23,41 @@
       <template v-slot:activator="{ on, attrs }">
         <v-icon v-bind="attrs" v-on="on" aria-label="dark mode menu">mdi-dots-vertical</v-icon>
       </template>
-      <v-card>
-        <v-card-text>
-          <v-radio-group hide-details class="my-0 py-0" :value="darkModeEnabled">
-            <div class="mx-auto">Dark mode</div>
-            <v-divider/>
-            <v-radio :ripple="false" label="Enabled" value="true" @click="darkMode = true"/>
-            <v-radio :ripple="false" label="Disabled" value="false" @click="darkMode = false"/>
-            <v-radio :ripple="false" label="System default" value="default" @click="clearDarkTheme"/>
-          </v-radio-group>
-        </v-card-text>
-      </v-card>
+      <v-list>
+        <v-list-item-group v-if="currentUser.data" >
+          <v-list-item>
+            Hello {{ currentUser.data.displayName ? currentUser.data.displayName : currentUser.data.email}}
+          </v-list-item>
+          <v-list-item>
+            <router-link  to="/change">
+              Change your password
+            </router-link>
+          </v-list-item>
+          <v-list-item>
+            <v-btn color="primary" @click="logout">Sign out</v-btn>
+          </v-list-item>
+        </v-list-item-group>
+        <v-list-item v-else>
+          <router-link  to="/login">
+            Sign in
+          </router-link>
+        </v-list-item>
+      </v-list>
+      <v-expansion-panels>
+        <v-expansion-panel>
+          <v-expansion-panel-header>Dark mode</v-expansion-panel-header>
+          <v-expansion-panel-content>
+            
+            <v-row>
+              <v-radio-group hide-details class="my-0 py-0" :value="darkModeEnabled">
+                <v-radio :ripple="false" label="Enabled" value="true" @click="darkMode = true"/>
+                <v-radio :ripple="false" label="Disabled" value="false" @click="darkMode = false"/>
+                <v-radio :ripple="false" label="System default" value="default" @click="clearDarkTheme"/>
+              </v-radio-group>
+            </v-row>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+      </v-expansion-panels>
     </v-menu>
   </v-app-bar>
 </template>
