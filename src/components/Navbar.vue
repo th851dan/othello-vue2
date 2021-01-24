@@ -21,8 +21,9 @@
     </transition>
     <v-menu offset-y :close-on-content-click="false" transition="slide-y-transition">
       <template v-slot:activator="{ on, attrs }">
-        <v-avatar v-if="currentUser.data" v-bind="attrs" v-on="on" color="#5f9ea0" size="auto">
-          <span class="white--text headline">{{getFirstLetters(currentUser.data.displayName)}}</span>
+        <v-avatar v-if="currentUser.data" v-bind="attrs" v-on="on" size="24px">
+          <img v-if="currentUser.data.photoURL" :src="currentUser.data.photoURL" alt="Avatar"/>
+          <v-icon v-else aria-label="dark mode menu">mdi-account-circle</v-icon>
         </v-avatar>
         <v-avatar v-else v-bind="attrs" v-on="on" size="auto">
           <v-icon aria-label="dark mode menu">mdi-account-circle</v-icon>
@@ -137,13 +138,6 @@ export default {
             name: "Home"
           });
         });
-    },
-    getFirstLetters(name){
-      let words = name.split(" ");
-      let ret = "";
-      for(let word of words)
-        ret += word[0];
-      return ret.toUpperCase();
     }
   },
   mounted() {
