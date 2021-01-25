@@ -2,7 +2,7 @@ let webSocket;
 
 export default {
   connectWebsocket({ dispatch, commit }) {
-    webSocket = new WebSocket('ws://localhost:9000/websocket')
+    webSocket = new WebSocket('wss://othello-backend-2.herokuapp.com/websocket')
     console.info('Connecting to WebSocket...')
 
     webSocket.onopen = () => {
