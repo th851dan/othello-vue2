@@ -21,7 +21,7 @@
     </transition>
     <v-menu offset-y :close-on-content-click="false" transition="slide-y-transition">
       <template v-slot:activator="{ on, attrs }">
-        <v-avatar v-if="currentUser.data" v-bind="attrs" v-on="on" size="24px">
+        <v-avatar v-if="currentUser.data" v-bind="attrs" v-on="on" size="20px">
           <img v-if="currentUser.data.photoURL" :src="currentUser.data.photoURL" alt="Avatar"/>
           <v-icon v-else aria-label="dark mode menu">mdi-account-circle</v-icon>
         </v-avatar>
@@ -215,7 +215,7 @@ a,
 }
 
 /deep/ .v-toolbar__content {
-  padding-right: 0 !important;
+  padding-right: .5em !important;
 }
 
 /deep/ .v-label {
@@ -225,7 +225,7 @@ a,
 
 @media (min-width: 768px) {
   /deep/ .v-toolbar__content {
-    padding: 0 !important;
+    padding-left: 0 !important;
   }
 }
 
