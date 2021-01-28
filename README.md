@@ -1,5 +1,7 @@
 # othello-vue2
 
+[Deployment as a Heroku App](https://othello-htwg.herokuapp.com)
+
 ## Project setup
 ```
 yarn install
